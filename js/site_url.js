@@ -1,2 +1,2 @@
-var baseUrl =   "http://localhost/eel-pct/";
+var baseUrl =   "http://localhost/eel-wlp/";
 

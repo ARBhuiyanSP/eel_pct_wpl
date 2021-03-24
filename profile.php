@@ -29,34 +29,34 @@ line-height: 14px;
 
 <?php
   if(isset($_POST['submit'])):
-  extract($_POST);
-  if($old_password!="" && $password!="" && $confirm_pwd!="") :
-  $name = $_SESSION['logged']['user_name'];// sesssion id
-  $old_pwd=md5(mysqli_real_escape_string($conn,$_POST['old_password']));
-  $pwd=md5(mysqli_real_escape_string($conn,$_POST['password']));
-  $c_pwd=md5(mysqli_real_escape_string($conn,$_POST['confirm_pwd']));
-  if($pwd == $c_pwd) :
-  if($pwd!=$old_pwd) :
+	extract($_POST);
+	if($old_password!="" && $password!="" && $confirm_pwd!="") :
+	$name = $_SESSION['logged']['user_name'];// sesssion id
+	$old_pwd=md5(mysqli_real_escape_string($conn,$_POST['old_password']));
+	$pwd=md5(mysqli_real_escape_string($conn,$_POST['password']));
+	$c_pwd=md5(mysqli_real_escape_string($conn,$_POST['confirm_pwd']));
+	if($pwd == $c_pwd) :
+	if($pwd!=$old_pwd) :
     $sql="SELECT * FROM `users` WHERE `name`='$name' AND `password` ='$old_pwd'";
     $db_check=$conn->query($sql);
     $count=mysqli_num_rows($db_check);
-  if($count==1) :
+	if($count==1) :
     $fetch=$conn->query("UPDATE `users` SET `password` = '$pwd' WHERE `name`='$name'");
     $old_password=''; $password =''; $confirm_pwd = '';
     $msg_sucess = "Your new password update successfully.";
-  else:
+	else:
     $error = "The old password you gave is incorrect.";
-  endif;
-  else :
-    $error = "Old password new password same Please try again.";
-  endif;
-  else:
-    $error = "New password and confirm password do not matched";
-  endif;
-  else :
-    $error = "Please fil all the fields";
-  endif;   
-  endif;
+	  endif;
+	  else :
+		$error = "Old password new password same Please try again.";
+	  endif;
+	  else:
+		$error = "New password and confirm password do not matched";
+	  endif;
+	  else :
+		$error = "Please fil all the fields";
+	  endif;   
+	  endif;
 ?>
 <div class="container-fluid">
     <!-- Breadcrumbs-->
