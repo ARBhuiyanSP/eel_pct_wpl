@@ -502,6 +502,7 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'getItemCodeByParam'
     $param                  =   [];
     $param['mb_materialid'] =   $code;
     $param['warehouse_id']  =   $_SESSION['logged']['warehouse_id'];
+    $param['site_id']  =   $_POST['site_id'];
     
     $totalStock     =   get_product_stock_by_material_id($param);
     

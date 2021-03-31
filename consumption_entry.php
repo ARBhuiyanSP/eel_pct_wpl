@@ -7,27 +7,27 @@
         <li class="breadcrumb-item">
             <a href="#">Dashboard</a>
         </li>
-        <li class="breadcrumb-item active">Issue Entry</li>
+        <li class="breadcrumb-item active">Consumption Entry</li>
     </ol>
     <!-- DataTables Example -->
     <div class="card mb-3">
         <div class="card-header">
             <i class="fas fa-table"></i>
-            Issue Entry Form</div>
+            Consumption Entry Form</div>
         <div class="card-body">
             <!--here your code will go-->
             <div class="form-group">
                 <form action="" method="post" name="add_issue" id="issue_entry_form" enctype="multipart/form-data" onsubmit="showFormIsProcessing('issue_entry_form');">
                     <div class="row" id="div1" style="">
-                        <div class="col-xs-2">
+                        <div class="col-xs-3">
                             <div class="form-group">
-                                <label>Issue Date</label>
-                                <input type="text" autocomplete="off" name="issue_date" id="issue_date" class="form-control datepicker" value="<?php echo date('Y-m-d'); ?>">
+                                <label>Consumption Date</label>
+                                <input type="text" autocomplete="off" name="consumption_date" id="issue_date" class="form-control datepicker" value="<?php echo date('Y-m-d'); ?>">
                             </div>
                         </div>
-                        <div class="col-xs-2">
+                        <div class="col-xs-3">
                             <div class="form-group">
-                                <label>Issue No</label>
+                                <label>Consumption No</label>
                                 <?php
                                 if ($_SESSION['logged']['user_type'] == 'whm') {
                                     $warehouse_id = $_SESSION['logged']['warehouse_id'];
@@ -35,18 +35,18 @@
                                     $result = mysqli_query($conn, $sql);
                                     $row = mysqli_fetch_array($result);
                                     $short_name = $row['short_name'];
-                                    $issueCode = 'IS-' . $short_name;
+                                    $consumptionCode = 'CON-' . $short_name;
                                 } else {
-                                    $issueCode = 'IS-WL';
+                                    $consumptionCode = 'CON-WL-';
                                 }
                                 ?>
-                                <input type="text" name="issue_id" id="issue_id" class="form-control" value="<?php echo getDefaultCategoryCodeByWarehouse('inv_issue', 'issue_id', '03d', '001', $issueCode) ?>" readonly>
-                                <input type="hidden" name="issue_no" id="issue_no" value="<?php echo getDefaultCategoryCodeByWarehouse('inv_issue', 'issue_id', '03d', '001', $issueCode) ?>">
+                                <input type="text" name="consumption_id" id="consumption_id" class="form-control" value="<?php echo getDefaultCategoryCodeByWarehouse('inv_consumption', 'consumption_id', '03d', '001', $consumptionCode) ?>" readonly>
+                                <input type="hidden" name="issue_no" id="issue_no" value="<?php echo getDefaultCategoryCodeByWarehouse('inv_consumption', 'consumption_id', '03d', '001', $consumptionCode) ?>">
                             </div>
                         </div>
-                        <div class="col-xs-2">
+                        <div class="col-xs-3">
                             <div class="form-group">
-                                <label>From Project</label>
+                                <label>Project</label>
                                 <select class="form-control" id="project_id" name="project_id" readonly >
                                     <?php
                                     $projectsData = getTableDataByTableName('projects');
@@ -64,7 +64,7 @@
                         </div>
                         <div class="col-xs-3">
                             <div class="form-group">
-                                <label>From Site</label>
+                                <label>Site/Warehouse</label>
 
                                 <?php
                                 $warehouse_id = $_SESSION['logged']['warehouse_id'];
@@ -105,25 +105,47 @@
 <?php } ?>
 </div> -->
                         </div>
-						<div class="col-xs-3">
-                            <div class="form-group">
-                                <label>To Site</label>
-                                <select class="form-control" id="site_id0" name="site_id[]" required>
-									<option value="">Select</option>
-									<?php
-									$projectsData = getTableDataByTableName('inv_warehosueinfo');
 
-									if (isset($projectsData) && !empty($projectsData)) {
-										foreach ($projectsData as $data) {
-											?>
-											<option value="<?php echo $data['id']; ?>"><?php echo $data['name']; ?></option>
-											<?php
-										}
-									}
-									?>
-								</select>
-                            </div>
-                        </div>
+
+                        <!------------test-------------
+                        <div class="form-group">
+    <label class="control-label col-sm-5" for="parent_code">Package:</label>
+    <div class="col-sm-7">
+        <select class="form-control" id="main_item_id" name="parent_item_id" onchange="getBuildingByPackage(this.value);">
+            <option value="">Select</option>
+                        <?php
+                        $parentCats = getTableDataByTableName('packages', '', 'name');
+                        if (isset($parentCats) && !empty($parentCats)) {
+                            foreach ($parentCats as $pcat) {
+                                ?>
+                            <option value="<?php echo $pcat['id'] ?>"><?php echo $pcat['name'] ?></option>
+                            <?php }
+                        }
+                        ?>
+        </select>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-sm-5" for="parent_code">Building:</label>
+    <div class="col-sm-7">
+        <select class="form-control" id="building_id" name="sub_item_id">
+            <option value="">Select</option>
+                        <?php
+                        $parentCats = getTableDataByTableName('buildings', '', 'building_id');
+                        if (isset($parentCats) && !empty($parentCats)) {
+                            foreach ($parentCats as $pcat) {
+                                ?>
+                            <option value="<?php echo $pcat['id'] ?>"><?php echo $pcat['building_id'] ?></option>
+    <?php }
+}
+?>
+        </select>
+    </div>
+</div>
+                        ------------test------------->
+
+
+
                     </div>
                     <div class="row" id="div1"  style="">
                         <div class="table-responsive">
@@ -135,6 +157,7 @@
                                 <th width="10%">Brand</th>
                                 <th width="10%">In Stock</th>
                                 <th width="10%">Qty<span class="reqfield"> ***required</span></th>
+                                <th width="15%">Site</th>
                                 <th width="5%"></th>
                                 </thead>
                                 <tbody>
@@ -187,63 +210,35 @@
                                         </td>
                                         <td><input type="text" name="material_total_stock[]" id="material_total_stock0" class="form-control" readonly ></td>
                                         <td><input type="text" name="quantity[]" id="quantity0" onchange="sum(0)" onkeyup="check_stock_quantity_validation(0)" class="form-control common_issue_quantity" required></td>
+                                        <td>
+                                            <?php
+												if ($_SESSION['logged']['user_type'] == 'whm') {
+												$warehouse_id = $_SESSION['logged']['warehouse_id'];
+												$dataresult = getDataRowByTableAndId('inv_warehosueinfo', $warehouse_id);
+												?>
+												<input type="text" class="form-control" readonly="readonly" value="<?php echo (isset($dataresult) && !empty($dataresult) ? $dataresult->name : ''); ?>">
+												<input type="hidden" name="site_id[]" id="site_id0" class="form-control" readonly="readonly" value="<?php echo $_SESSION['logged']['warehouse_id']; ?>">
+											<?php } else { ?>
+											<select class="form-control" id="site_id0" name="site_id[]" required>
+                                                <option value="">Select</option>
+                                                <?php
+                                                $projectsData = getTableDataByTableName('inv_warehosueinfo');
+
+                                                if (isset($projectsData) && !empty($projectsData)) {
+                                                    foreach ($projectsData as $data) {
+                                                        ?>
+                                                        <option value="<?php echo $data['id']; ?>"><?php echo $data['name']; ?></option>
+                                                        <?php
+                                                    }
+                                                }
+                                                ?>
+                                            </select>
+											<?php } ?>
+                                        </td>
                                         <td><button type="button" name="add" id="add" class="btn" style="background-color:#007BFF;color:#ffffff;">+</button></td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-                    <div class="row" style="">
-                        <div class="col-xs-6">
-                            <div class="form-group">
-                                <label>Received By</label><span class="reqfield"> ***required</span>
-                                <select class="form-control select2" id="received_by" name="received_by" required>
-                                    <?php
-                                    $projectsData = getTableDataByTableName('inv_employee');
-                                    ;
-                                    if (isset($projectsData) && !empty($projectsData)) {
-                                        foreach ($projectsData as $data) {
-                                            ?>
-                                            <option value="<?php echo $data['name']; ?>"><?php echo $data['name']; ?></option>
-                                            <?php
-                                        }
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-xs-6">
-                            <div class="form-group">
-                                <label>Receiver Phone</label><span class="reqfield"> ***required</span>
-                                <input type="text" autocomplete="off" name="receiver_phone" id="receiver_phone" class="form-control" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" style="">
-                        <div class="col-xs-6">
-                            <div class="form-group">
-                                <input type="file" accept="image/*"  name="file" id="picture">
-                                <p id="error1" style="display:none; color:#FF0000;">
-                                    Invalid Image Format! Image Format Must Be JPG, JPEG, PNG or GIF.
-                                </p>
-                                <p id="error2" style="display:none; color:#FF0000;">
-                                    Maximum File Size Limit is 500KB.
-                                </p>
-                                <script>
-                                    var loadFile = function (event) {
-                                        var output = document.getElementById('output');
-                                        output.src = URL.createObjectURL(event.target.files[0]);
-                                        output.onload = function () {
-                                            URL.revokeObjectURL(output.src) // free memory
-                                        }
-                                    };
-                                </script>
-                            </div>
-                        </div>
-                        <div class="col-xs-6">
-                            <div style="border:1px solid gray;height:150px;width:150px;">
-                                <img id="output" height="150px" width="150px"/>
-                            </div>
                         </div>
                     </div>
                     <div class="row" style="">
@@ -256,7 +251,7 @@
                         <div class="col-xs-12">
                             <div class="form-group">
                                 <div class="modal-footer">
-                                    <input type="submit" name="issue_submit" id="issue_submit" class="btn btn-block" style="background-color:#007BFF;color:#ffffff;" value="Save" />
+                                    <input type="submit" name="consumption_submit" id="consumption_submit" class="btn btn-block" style="background-color:#007BFF;color:#ffffff;" value="Save" />
                                 </div>    
                             </div>
                         </div>
@@ -297,7 +292,7 @@
                                             ?><option value="<?php echo $data['brand_name']; ?>"><?php echo $data['brand_name']; ?></option><?php
                                         }
                                     }
-                                    ?></select></td><td><input type="text" name="material_total_stock[]" id="material_total_stock' + i + '" class="form-control" readonly></td><td><input type="text" name="quantity[]" id="quantity' + i + '" onchange="sum(0)"  onkeyup="check_stock_quantity_validation(' + i + ')" class="form-control common_issue_quantity" required></td><td><button type="button" name="remove" id="' + i + '" class="btn btn_remove" style="background-color:#f26522;color:#ffffff;">X</button></td></tr>');
+                                    ?></select></td><td><input type="text" name="material_total_stock[]" id="material_total_stock' + i + '" class="form-control" readonly></td><td><input type="text" name="quantity[]" id="quantity' + i + '" onchange="sum(0)"  onkeyup="check_stock_quantity_validation(' + i + ')" class="form-control common_issue_quantity" required></td><td><?php if ($_SESSION['logged']['user_type'] == 'whm') {$warehouse_id = $_SESSION['logged']['warehouse_id'];$dataresult = getDataRowByTableAndId('inv_warehosueinfo', $warehouse_id); ?><input type="text" class="form-control" readonly="readonly" value="<?php echo (isset($dataresult) && !empty($dataresult) ? $dataresult->name : ''); ?>"><input type="hidden" name="site_id[]" id="site_id' + i + '" class="form-control" readonly="readonly" value="<?php echo $_SESSION['logged']['warehouse_id']; ?>"><?php } else { ?> <select class="form-control" id="site_id' + i + '" name="site_id[]" required><option value="">Select</option><?php $projectsData = getTableDataByTableName('inv_warehosueinfo');if (isset($projectsData) && !empty($projectsData)) { foreach ($projectsData as $data) { ?><option value="<?php echo $data['id']; ?>"><?php echo $data['name']; ?></option><?php } } ?></select><?php } ?></td><td><button type="button" name="remove" id="' + i + '" class="btn btn_remove" style="background-color:#f26522;color:#ffffff;">X</button></td></tr>');
             $('#quantity' + i + ', #unit_price' + i).change(function () {
                 sum(i)
             });

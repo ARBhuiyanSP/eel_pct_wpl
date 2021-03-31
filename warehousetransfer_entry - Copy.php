@@ -52,7 +52,7 @@
 						<?php if($_SESSION['logged']['user_type'] == 'whm') { ?>
 						<div class="col-xs-3">
 							<div class="form-group">
-									<label>From Site</label>
+									<label>From Warehouse</label>
 									
 									<?php  
 										$warehouse_id = $_SESSION['logged']['warehouse_id'];								
@@ -68,7 +68,7 @@
 						
 						<div class="col-xs-3">
 							<div class="form-group">
-								<label for="id">From Site </label>
+								<label for="id">From Warehouse </label>
 								<select class="form-control" id="from_warehouse" name="from_warehouse" required>
 									<option value="">Select</option>
 									<?php
@@ -92,7 +92,7 @@
 						
 						<div class="col-xs-3">
 							<div class="form-group">
-								<label for="id">To Site </label>
+								<label for="id">To Warehouse </label>
 								<select class="form-control" id="to_warehouse" name="to_warehouse" required>
 									<option value="">Select</option>
 									<?php

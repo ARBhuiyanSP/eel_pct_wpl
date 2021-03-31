@@ -403,6 +403,7 @@ function getItemCodeByParam(id, table, field, selector, qty_unit = '') {
             table: table,
             field: field,
             qty_unit: qty_unit,
+			site_id: (($('#from_site').val())? $('#from_site').val() : '')
         };
         $.ajax({
             url: baseUrl + "includes/item_process.php?process_type=getItemCodeByParam",
@@ -437,6 +438,7 @@ function getAppendItemCodeByParam(id, table, field, selector, qty_unit = '') {
             table: table,
             field: field,
             qty_unit: qty_unit,
+			site_id: (($('#from_site').val())? $('#from_site').val() : '')
         };
         $.ajax({
             url: baseUrl + "includes/item_process.php?process_type=getItemCodeByParam",

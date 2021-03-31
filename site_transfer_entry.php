@@ -16,7 +16,7 @@
     <div class="card mb-3">
         <div class="card-header">
             <i class="fas fa-table"></i>
-            Warehouse Transfer Entry Form</div>
+            Site Transfer Entry Form</div>
         <div class="card-body">
             <!--here your code will go-->
 			<div class="form-group">

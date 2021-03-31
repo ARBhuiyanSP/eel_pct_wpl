@@ -16,7 +16,7 @@
     <div class="card mb-3">
         <div class="card-header">
             <i class="fas fa-table"></i>
-            Warehouse Transfer Entry Form</div>
+            Site To Site Transfer Entry Form</div>
         <div class="card-body">
             <!--here your code will go-->
 			<div class="form-group">
@@ -38,9 +38,9 @@
 										$result = mysqli_query($conn, $sql);
 										$row=mysqli_fetch_array($result);
 										$short_name = $row['short_name'];
-										$transferCode= 'WT-'.$short_name;
+										$transferCode= 'WLP-ST-'.$short_name;
 									} else{
-										$transferCode= 'WT-CW';
+										$transferCode= 'WLP-ST-';
 									}
 								?>
 								<input type="text" name="transfer_id" id="transfer_id" class="form-control" readonly="readonly" value="<?php echo getDefaultCategoryCodeByWarehouseT('inv_transfermaster', 'transfer_id', '03d', '001', $transferCode) ?>">
@@ -48,31 +48,13 @@
 							</div>
 						</div>
 						
-						
-						<?php if($_SESSION['logged']['user_type'] == 'whm') { ?>
-						<div class="col-xs-3">
-							<div class="form-group">
-									<label>From Site</label>
-									
-									<?php  
-										$warehouse_id = $_SESSION['logged']['warehouse_id'];								
-										$dataresult =   getDataRowByTableAndId('inv_warehosueinfo', $warehouse_id);
-									?>
-									<input type="text" class="form-control" readonly="readonly" value="<?php echo (isset($dataresult) && !empty($dataresult) ? $dataresult->name : ''); ?>">
-									
-									<input type="hidden" name="from_warehouse" id="from_warehouse" class="form-control" readonly="readonly" value="<?php echo $_SESSION['logged']['warehouse_id']; ?>">
-									
-							</div>
-						</div>
-						<?php }else { ?>
-						
 						<div class="col-xs-3">
 							<div class="form-group">
 								<label for="id">From Site </label>
-								<select class="form-control" id="from_warehouse" name="from_warehouse" required>
-									<option value="">Select</option>
+								<select class="form-control" id="from_site" name="from_site" required >
+									<option value="0">Select</option>
 									<?php
-									$projectsData = getTableDataByTableName('inv_warehosueinfo');
+									$projectsData = getTableDataByTableName('packages');
 
 									if (isset($projectsData) && !empty($projectsData)) {
 										foreach ($projectsData as $data) {
@@ -85,18 +67,14 @@
 								</select>
 							</div>
 						</div>
-						<?php } ?>
-						
-						
-						
 						
 						<div class="col-xs-3">
 							<div class="form-group">
 								<label for="id">To Site </label>
-								<select class="form-control" id="to_warehouse" name="to_warehouse" required>
-									<option value="">Select</option>
+								<select class="form-control" id="to_site" name="to_site" required>
+									<option value="0">Select</option>
 									<?php
-									$projectsData = getTableDataByTableName('inv_warehosueinfo');
+									$projectsData = getTableDataByTableName('packages');
 
 									if (isset($projectsData) && !empty($projectsData)) {
 										foreach ($projectsData as $data) {
