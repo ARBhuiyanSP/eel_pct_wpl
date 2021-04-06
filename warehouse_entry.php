@@ -22,20 +22,20 @@ include 'header.php';
                     <div class="row" id="div1" style="">
                         <div class="col-xs-2">
                             <div class="form-group">
-                                <label>Warehouse ID</label>
-                                <input type="text" name="warehouse_id" id="warehouse_id" class="form-control" readonly="readonly" value="<?php echo getDefaultCategoryCode('inv_warehosueinfo', 'warehouse_id', '03d', '001', 'WH-') ?>">
+                                <label>Site ID</label>
+                                <input type="text" name="warehouse_id" id="warehouse_id" class="form-control" readonly="readonly" value="<?php echo getDefaultCategoryCode('inv_warehosueinfo', 'warehouse_id', '03d', '001', 'SITE-') ?>">
                             </div>
                         </div>
 						<div class="col-xs-3">
                             <div class="form-group">
-                                <label>Warehouse Name</label>
+                                <label>Site Name</label>
                                 <input type="text" name="name" id="name" class="form-control">
                             </div>
                         </div>
 						<div class="col-xs-2">
                             <div class="form-group">
                                 <label>Short Name</label>
-                                <input type="text" name="short_name" id="short_name" placeholder="like 'LN for Londa'" class="form-control">
+                                <input type="text" name="short_name" id="short_name" placeholder="like 'GK for Gupta Khal'" class="form-control">
                             </div>
                         </div>
 						<div class="col-xs-2">
