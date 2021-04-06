@@ -331,20 +331,32 @@ function get_product_stock_by_material_id($param) {
     $issueQuantityData      =   get_material_balance_issue_quantity($param);
     $issueQuantity          =   (isset($issueQuantityData->issueMbOutTotal) && !empty($issueQuantityData->issueMbOutTotal) ? $issueQuantityData->issueMbOutTotal : 0);
 	
+	// consumption quantity:
+    $consumptionQuantityData      =   get_material_balance_consumption_quantity($param);
+    $consumptionQuantity          =   (isset($consumptionQuantityData->consumptionMbOutTotal) && !empty($consumptionQuantityData->consumptionMbOutTotal) ? $consumptionQuantityData->consumptionMbOutTotal : 0);
+	
 	// return quantity:
-    $returnQuantityData      =   get_material_balance_return_quantity($param);
-    $returnQuantity          =   (isset($returnQuantityData->returnMbInTotal) && !empty($returnQuantityData->returnMbInTotal) ? $returnQuantityData->returnMbInTotal : 0);
+    //$returnQuantityData      =   get_material_balance_return_quantity($param);
+   // $returnQuantity          =   (isset($returnQuantityData->returnMbInTotal) && !empty($returnQuantityData->returnMbInTotal) ? $returnQuantityData->returnMbInTotal : 0);
+		
+	// return_out quantity:
+    $return_outQuantityData	=   get_material_balance_return_out_quantity($param);
+    $return_outQuantity		=   (isset($return_outQuantityData->returnOutMbOutTotal) && !empty($return_outQuantityData->returnOutMbOutTotal) ? $return_outQuantityData->returnOutMbOutTotal : 0);
+	
+	// return_in quantity:
+    $return_inQuantityData      =   get_material_balance_return_in_quantity($param);
+    $return_inQuantity          =   (isset($return_inQuantityData->returnInMbInTotal) && !empty($return_inQuantityData->returnInMbInTotal) ? $return_inQuantityData->returnInMbInTotal : 0);
     
     // transfer_out quantity:
     $transfer_outQuantityData      =   get_material_balance_transfer_out_quantity($param);
     $transfer_outQuantity          =   (isset($transfer_outQuantityData->transferOutMbOutTotal) && !empty($transfer_outQuantityData->transferOutMbOutTotal) ? $transfer_outQuantityData->transferOutMbOutTotal : 0);
     
-    // transfer_out quantity:
+    // transfer_in quantity:
     $transfer_inQuantityData      =   get_material_balance_transfer_in_quantity($param);
     $transfer_inQuantity          =   (isset($transfer_inQuantityData->transferInMbInTotal) && !empty($transfer_inQuantityData->transferInMbInTotal) ? $transfer_inQuantityData->transferInMbInTotal : 0);
     
-    $totalIn    =   ($openingQuantity + $receivingQuantity + $returnQuantity + $transfer_inQuantity);
-    $totalOut   =   ($issueQuantity + $transfer_outQuantity);
+    $totalIn    =   ($openingQuantity + $receivingQuantity + $return_inQuantity + $transfer_inQuantity);
+    $totalOut   =   ($consumptionQuantity + $issueQuantity + $transfer_outQuantity + $return_outQuantity);
     
     $totalStock     =   $totalIn - $totalOut;
     return $totalStock;
@@ -357,12 +369,12 @@ function get_product_stock_by_material_id($param) {
  */
 function get_material_balance_opening_quantity($param){
     global $conn;
-    $rowData    =   '';
+    $rowData    	=   '';
     $mb_materialid  =   $param['mb_materialid'];
     $warehouse_id   =   $param['warehouse_id'];
     if(isset($param['site_id']) && !empty($param['site_id'])){
 		$site_id	=	$param['site_id'];
-		$sql            =   "SELECT mb_materialid,"
+		$sql        =   "SELECT mb_materialid,"
 				. " sum(mbin_qty) as openingMbInTotal,"
 				. " sum(mbout_qty) as openingMbOutTotal,"
 				. " mbin_qty, mbin_val,"
@@ -372,7 +384,7 @@ function get_material_balance_opening_quantity($param){
 				. " AND warehouse_id='$warehouse_id' AND package_id='$site_id'"
 				. " AND mbtype='OP'";
 	}else{
-		$sql            =   "SELECT mb_materialid,"
+		$sql		=   "SELECT mb_materialid,"
 				. " sum(mbin_qty) as openingMbInTotal,"
 				. " sum(mbout_qty) as openingMbOutTotal,"
 				. " mbin_qty, mbin_val,"
@@ -508,6 +520,143 @@ function get_material_balance_issue_quantity($param){
             . " AND warehouse_id='$warehouse_id'"
             /* . " AND `approval_status`='1'" */
             . " AND mbtype='Issue'";
+	}
+	
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $rowData = $result->fetch_object();
+    }
+    return $rowData;
+}
+
+/*
+ * Method for get Consumption total data
+ * $param
+ * 1. mb_materialid
+ * 2. warehouse_id
+ */
+function get_material_balance_consumption_quantity($param){
+    global $conn;
+    $rowData    =   '';
+    $mb_materialid  =   $param['mb_materialid'];
+    $warehouse_id   =   $param['warehouse_id'];
+    if(isset($param['site_id']) && !empty($param['site_id'])){
+		$site_id	=	$param['site_id'];
+		$sql            =   "SELECT mb_materialid,"
+            . " sum(mbin_qty) as consumptionMbInTotal,"
+            . " sum(mbout_qty) as consumptionMbOutTotal,"
+            . " mbin_qty, mbin_val,"
+            . " mbout_qty,"
+            . " mbout_val,"
+            . " mbprice FROM inv_materialbalance WHERE mb_materialid = '$mb_materialid'"
+            . " AND warehouse_id='$warehouse_id' AND package_id='$site_id'"
+            /* . " AND `approval_status`='1'" */
+            . " AND mbtype='Consumption'";
+		
+	}else{
+		$sql            =   "SELECT mb_materialid,"
+            . " sum(mbin_qty) as consumptionMbInTotal,"
+            . " sum(mbout_qty) as consumptionMbOutTotal,"
+            . " mbin_qty, mbin_val,"
+            . " mbout_qty,"
+            . " mbout_val,"
+            . " mbprice FROM inv_materialbalance WHERE mb_materialid = '$mb_materialid'"
+            . " AND warehouse_id='$warehouse_id'"
+            /* . " AND `approval_status`='1'" */
+            . " AND mbtype='Consumption'";
+	}
+	
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $rowData = $result->fetch_object();
+    }
+    return $rowData;
+}
+
+/*
+ * Method for get Return Out total data
+ * $param
+ * 1. mb_materialid
+ * 2. warehouse_id
+ */
+function get_material_balance_return_out_quantity($param){
+    global $conn;
+    $rowData    	=   '';
+    $mb_materialid  =   $param['mb_materialid'];
+    $warehouse_id   =   $param['warehouse_id'];
+    
+	if(isset($param['site_id']) && !empty($param['site_id'])){
+		$site_id	=	$param['site_id'];
+		$sql            =   "SELECT mb_materialid,"
+            . " sum(mbin_qty) as returnOutMbInTotal,"
+            . " sum(mbout_qty) as returnOutMbOutTotal,"
+            . " mbin_qty, mbin_val,"
+            . " mbout_qty,"
+            . " mbout_val,"
+            . " mbprice FROM inv_materialbalance WHERE mb_materialid = '$mb_materialid'"
+            . " AND warehouse_id='$warehouse_id' AND package_id='$site_id'"
+            /* . " AND `approval_status`='1'" */
+            . " AND mbtype='Return Out'";
+		
+		
+	}else{
+		$sql            =   "SELECT mb_materialid,"
+            . " sum(mbin_qty) as returnOutMbInTotal,"
+            . " sum(mbout_qty) as returnOutMbOutTotal,"
+            . " mbin_qty, mbin_val,"
+            . " mbout_qty,"
+            . " mbout_val,"
+            . " mbprice FROM inv_materialbalance WHERE mb_materialid = '$mb_materialid'"
+            . " AND warehouse_id='$warehouse_id'"
+            /* . " AND `approval_status`='1'" */
+            . " AND mbtype='Return Out'";
+	}
+	
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $rowData = $result->fetch_object();
+    }
+    return $rowData;
+}
+
+
+
+/*
+ * Method for get Return In total data
+ * $param
+ * 1. mb_materialid
+ * 2. warehouse_id
+ */
+function get_material_balance_return_in_quantity($param){
+    global $conn;
+    $rowData    =   '';
+    $mb_materialid  =   $param['mb_materialid'];
+    $warehouse_id   =   $param['warehouse_id'];
+    if(isset($param['site_id']) && !empty($param['site_id'])){
+		$site_id	=	$param['site_id'];
+		$sql            =   "SELECT mb_materialid,"
+            . " sum(mbin_qty) as returnInMbInTotal,"
+            . " sum(mbout_qty) as returnInMbOutTotal,"
+            . " mbin_qty, mbin_val,"
+            . " mbout_qty,"
+            . " mbout_val,"
+            . " mbprice FROM inv_materialbalance WHERE mb_materialid = '$mb_materialid'"
+            . " AND warehouse_id='$warehouse_id' AND package_id='$site_id'"
+            /* . " AND `approval_status`='1'" */
+            . " AND mbtype='Return In'";
+		
+		
+	}else{
+		$sql            =   "SELECT mb_materialid,"
+            . " sum(mbin_qty) as returnInMbInTotal,"
+            . " sum(mbout_qty) as returnInMbOutTotal,"
+            . " mbin_qty, mbin_val,"
+            . " mbout_qty,"
+            . " mbout_val,"
+            . " mbprice FROM inv_materialbalance WHERE mb_materialid = '$mb_materialid'"
+            . " AND warehouse_id='$warehouse_id'"
+            /* . " AND `approval_status`='1'" */
+            . " AND mbtype='Return In'";
 	}
 	
     $result = $conn->query($sql);

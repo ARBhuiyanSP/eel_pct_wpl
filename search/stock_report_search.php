@@ -131,21 +131,17 @@ if(isset($_GET['submit'])){
 												<?php 
 													$mb_materialid = $rowmat['material_id_code'];
 													
-													if($_SESSION['logged']['user_type'] !== 'whm'){
-														$sqlinqty = "SELECT SUM(`mbin_qty`) AS totalin FROM `inv_materialbalance` WHERE `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
-													}else{
+													
 														$sqlinqty = "SELECT SUM(`mbin_qty`) AS totalin FROM `inv_materialbalance` WHERE warehouse_id = $warehouse_id AND `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
-													}
+													
 													
 													
 													$resultinqty = mysqli_query($conn, $sqlinqty);
 													$rowinqty = mysqli_fetch_object($resultinqty) ;
 													
-													if($_SESSION['logged']['user_type'] !== 'whm'){
-														$sqloutqty = "SELECT SUM(`mbout_qty`) AS totalout FROM `inv_materialbalance` WHERE `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
-													}else{
+													
 														$sqloutqty = "SELECT SUM(`mbout_qty`) AS totalout FROM `inv_materialbalance` WHERE warehouse_id = $warehouse_id AND `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
-													}
+													
 													
 													$resultoutqty = mysqli_query($conn, $sqloutqty);
 													$rowoutqty = mysqli_fetch_object($resultoutqty) ;
@@ -156,11 +152,9 @@ if(isset($_GET['submit'])){
 											</td>
 											<td style="text-align:right;">
 												<?php
-												if($_SESSION['logged']['user_type'] !== 'whm'){
-														$sqlinval = "SELECT SUM(`mbin_val`) AS totalinval FROM `inv_materialbalance` WHERE `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
-													}else{
+												
 														$sqlinval = "SELECT SUM(`mbin_val`) AS totalinval FROM `inv_materialbalance` WHERE warehouse_id = $warehouse_id AND `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
-													}
+													
 													
 												
 												$resultinval= mysqli_query($conn, $sqlinval);

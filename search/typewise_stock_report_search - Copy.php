@@ -94,9 +94,11 @@ if(isset($_GET['submit'])){
 					</thead>
 					<tbody>
 					<?php
-						
+						if($_SESSION['logged']['user_type'] !== 'whm'){
+							$sql	=	"SELECT * FROM `qry_typewisestock` WHERE `type`='$type_id' GROUP BY `mb_materialid`";
+						}else{
 							$sql	=	"SELECT * FROM `qry_typewisestock` WHERE `type`='$type_id' AND `warehouse_id` = $warehouse_id GROUP BY `mb_materialid`";
-						
+						}
 						$result = mysqli_query($conn, $sql);
 						while($row=mysqli_fetch_array($result))
 						{
@@ -112,9 +114,11 @@ if(isset($_GET['submit'])){
 									$rowunit=mysqli_fetch_array($resultunit);
 									
 									
-									
+									if($_SESSION['logged']['user_type'] !== 'whm'){
+														$sqlinqty = "SELECT SUM(`mbin_qty`) AS totalin FROM `qry_typewisestock` WHERE `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
+													}else{
 														$sqlinqty = "SELECT SUM(`mbin_qty`) AS totalin FROM `qry_typewisestock` WHERE warehouse_id = $warehouse_id AND `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
-													
+													}
 													
 													$resultinqty = mysqli_query($conn, $sqlinqty);
 													$rowinqty = mysqli_fetch_object($resultinqty) ;
@@ -122,9 +126,11 @@ if(isset($_GET['submit'])){
 												
 
 												
-										
+											if($_SESSION['logged']['user_type'] !== 'whm'){
+											$sqloutqty = "SELECT SUM(`mbout_qty`) AS totalout FROM `qry_typewisestock` WHERE `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
+											}else{
 											$sqloutqty = "SELECT SUM(`mbout_qty`) AS totalout FROM `qry_typewisestock` WHERE warehouse_id = $warehouse_id AND `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
-											
+											}
 											
 											$resultoutqty = mysqli_query($conn, $sqloutqty);
 											$rowoutqty = mysqli_fetch_object($resultoutqty) ;

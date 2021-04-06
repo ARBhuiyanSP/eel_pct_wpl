@@ -102,10 +102,7 @@
             <a class="dropdown-item" href="Purchase_list.php"><i class="fa fa-list" aria-hidden="true" style="color: red;"></i><span class="sub_menu_text_design">Purchase  List</span></a>
         </div>
     </li> -->
-    
-	<?php } ?>
-	<?php } ?>
-	<?php if($_SESSION['logged']['user_type'] !== 'superAdmin') {?>
+
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-truck" aria-hidden="true" style="color: #007BFF;"></i>
@@ -126,6 +123,10 @@
             <a class="dropdown-item" href="issue-list.php"><i class="fa fa-list" aria-hidden="true" style="color: #007BFF;"></i><span class="sub_menu_text_design">Issue List</span></a>
         </div>
     </li>
+	    
+	<?php } ?>
+	<?php } ?>
+	<?php if($_SESSION['logged']['user_type'] !== 'superAdmin') {?>
 	<li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-server" aria-hidden="true" style="color: #007BFF;"></i>
@@ -143,7 +144,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <a class="dropdown-item" href="project_transfer.php"><i class="fa fa-plus" aria-hidden="true" style="color: #007BFF;"></i><span class="sub_menu_text_design">Projects Transfer</span></a>
-            <a class="dropdown-item" href="site_transfer.php"><i class="fa fa-plus" aria-hidden="true" style="color: #007BFF;"></i><span class="sub_menu_text_design">Site Transfer</span></a>
+            <a class="dropdown-item" href="warehousetransfer_entry.php"><i class="fa fa-plus" aria-hidden="true" style="color: #007BFF;"></i><span class="sub_menu_text_design">Site Transfer</span></a>
             <!-- <a class="dropdown-item" href="warehousetransfer_entry.php"><i class="fa fa-plus" aria-hidden="true" style="color: #007BFF;"></i><span class="sub_menu_text_design">Warehouse Transfer</span></a> -->
             <a class="dropdown-item" href="transfer-list.php"><i class="fa fa-list" aria-hidden="true" style="color: #007BFF;"></i><span class="sub_menu_text_design">W.Transfer List</span></a>
         </div>

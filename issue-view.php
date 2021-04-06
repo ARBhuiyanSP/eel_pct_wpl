@@ -41,7 +41,7 @@ $issue_id=$_GET['no']; ?>
 							<div class="col-sm-6">	
 								<p>
 								<img src="images/Saif_Engineering_Logo_165X72.png" height="100px;"/>
-								<h5>E-engineering Ltd</h5><span>Payra Project</span></br></p></div>
+								<h5>E-engineering Ltd</h5><span>Waterlogging Project</span></br></p></div>
 							<div class="col-sm-6">
 								<table class="table table-bordered">
 									<tr>
@@ -63,10 +63,19 @@ $issue_id=$_GET['no']; ?>
 										</td>
 									</tr>
 									<tr>
-										<th>Warehouse:</th>
+										<th>From:</th>
 										<td>
 											<?php 
 											$dataresult =   getDataRowByTableAndId('inv_warehosueinfo', $rowd['warehouse_id']);
+											echo (isset($dataresult) && !empty($dataresult) ? $dataresult->name : '');
+											?>
+										</td>
+									</tr>
+									<tr>
+										<th>To:</th>
+										<td>
+											<?php 
+											$dataresult =   getDataRowByTableAndId('inv_warehosueinfo', $rowd['to_warehouse_id']);
 											echo (isset($dataresult) && !empty($dataresult) ? $dataresult->name : '');
 											?>
 										</td>
@@ -83,7 +92,6 @@ $issue_id=$_GET['no']; ?>
 									<th>Material ID</th>
 									<th>Material Name</th>
 									<th>Material Unit</th>
-									<th>Site</th>
 									<th>Quantity</th>
 								</tr>
 							</thead>
@@ -109,16 +117,12 @@ $issue_id=$_GET['no']; ?>
 										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->unit_name : '');
 										?>
 									</td>
-									<td><?php 
-											$dataresult =   getDataRowByTableAndId('packages', $row['package_id']);
-											echo (isset($dataresult) && !empty($dataresult) ? $dataresult->name : '');
-										?></td>
 										
 									<td><?php echo $row['issue_qty'] ?></td>
 								</tr>
 								<?php } ?>
 								<tr>
-									<td colspan="5" class="grand_total">Grand Total:</td>
+									<td colspan="4" class="grand_total">Grand Total:</td>
 									<td>
 										<?php 
 										$sql2 = "SELECT sum(issue_qty) FROM  `inv_issuedetail` where `issue_id`='$issue_id'";
@@ -132,7 +136,7 @@ $issue_id=$_GET['no']; ?>
 									</td>
 								</tr>
 								<tr>
-									<td colspan="6">Remarks:</br>
+									<td colspan="5">Remarks:</br>
 										<?php 
 										echo $rowd['remarks'];
 										?>

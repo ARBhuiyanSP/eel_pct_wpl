@@ -70,10 +70,10 @@
 						<div class="col-xs-2">
 							<div class="form-group">
 									<label>From Site</label>
-									<select class="form-control" id="from_site" name="from_site" required>
+									<select class="form-control" id="" name="from_site" required>
 										<option value="0">Select</option>
 										<?php
-										$projectsData = getTableDataByTableName('packages');
+										$projectsData = getTableDataByTableName('inv_warehosueinfo');
 
 										if (isset($projectsData) && !empty($projectsData)) {
 											foreach ($projectsData as $data) {
@@ -110,7 +110,7 @@
 							<div class="form-group">
 								<label for="id">To Site </label>
 								<select class="form-control" id="to_site" name="to_site" required>
-									<option value="0">Central</option>
+									<option value="1">Central</option>
 								</select>
 							</div>
 						</div>

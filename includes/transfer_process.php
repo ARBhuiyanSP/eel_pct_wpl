@@ -115,7 +115,7 @@ if (isset($_POST['project_transfer_submit']) && !empty($_POST['project_transfer_
         $transfer_id		= $_POST['transfer_id'];
 		
         $from_site			= $_POST['from_site'];
-        $from_warehouse		= $_POST['from_warehouse'];
+        //$from_warehouse		= $_POST['from_warehouse'];
         $from_project      	= $_POST['from_project'];
         $to_project         = $_POST['to_project'];
         $to_site         	= $_POST['to_site'];
@@ -130,7 +130,7 @@ if (isset($_POST['project_transfer_submit']) && !empty($_POST['project_transfer_
 		
         $remarks            = $_POST['remarks'];        
                
-        $query = "INSERT INTO `inv_projectstransferdetails` (`transfer_id`,`material_id`,`material_name`,`transfer_qty`,`unit`,`type`,`inprojects`,`outprojects`) VALUES ('$transfer_id','$material_id','$material_name','$quantity','$unit','1','$to_project','$from_project')";
+        $query = "INSERT INTO `inv_projectstransferdetails` (`transfer_id`,`material_id`,`material_name`,`transfer_qty`,`unit`,`type`,`inprojects`,`insite`,`outprojects`,`outsite`) VALUES ('$transfer_id','$material_id','$material_name','$quantity','$unit','1','$to_project','$to_site','$from_project','$from_site')";
         $conn->query($query);
         
         /*
@@ -147,20 +147,15 @@ if (isset($_POST['project_transfer_submit']) && !empty($_POST['project_transfer_
         $mbserial_id    = 0;
         $jvno           = $transfer_id;       
         
-        $query_outmb = "INSERT INTO `inv_materialbalance` (`mb_ref_id`,`mb_materialid`,`mb_date`,`mbin_qty`,`mbin_val`,`mbout_qty`,`mbout_val`,`mbprice`,`mbtype`,`mbserial`,`mbserial_id`,`mbunit_id`,`jvno`, `project_id`, `warehouse_id`,`site_id`) VALUES ('$mb_ref_id','$mb_materialid','$mb_date','$mbfrom_in_qty','$mbin_val','$mbfrom_out_qty','$mbout_val','$mbprice','$mbfrom_type','$mbserial','$mbunit_id','$mbserial_id','$jvno','$from_project','$from_warehouse','$from_site')";
+        $query_outmb = "INSERT INTO `inv_materialbalance` (`mb_ref_id`,`mb_materialid`,`mb_date`,`mbin_qty`,`mbin_val`,`mbout_qty`,`mbout_val`,`mbprice`,`mbtype`,`mbserial`,`mbserial_id`,`mbunit_id`,`jvno`, `project_id`, `warehouse_id`) VALUES ('$mb_ref_id','$mb_materialid','$mb_date','$mbfrom_in_qty','$mbin_val','$mbfrom_out_qty','$mbout_val','$mbprice','$mbfrom_type','$mbserial','$mbunit_id','$mbserial_id','$jvno','$from_project','$from_site')";
         $conn->query($query_outmb);
-		
-		
-		$mbin_in_qty       	= $quantity;
-        $mbin_out_qty      	= 0;
-        $mbfrom_type		= 'Transfer In';
-        $query_inmb = "INSERT INTO `inv_materialbalance` (`mb_ref_id`,`mb_materialid`,`mb_date`,`mbin_qty`,`mbin_val`,`mbout_qty`,`mbout_val`,`mbprice`,`mbtype`,`mbserial`,`mbserial_id`,`mbunit_id`,`jvno`, `project_id`, `warehouse_id`,`site_id`) VALUES ('$mb_ref_id','$mb_materialid','$mb_date','$mbin_in_qty','$mbin_val','$mbin_out_qty','$mbout_val','$mbprice','$mbfrom_type','$mbserial','$mbunit_id','$mbserial_id','$jvno','$to_project','0','$to_site')";
-        $conn->query($query_inmb);
+
+
     }
     /*
     *  Insert Data Into inv_projectstransfer Table:
     */
-    $query2 = "INSERT INTO `inv_projectstransfer` (`transfer_id`,`transfer_date`,`from_project`,`from_site`,`to_project`,`remarks`) VALUES ('$transfer_id','$transfer_date','$from_project','$from_site','$to_project','$remarks')";
+    $query2 = "INSERT INTO `inv_projectstransfer` (`transfer_id`,`transfer_date`,`from_project`,`from_site`,`to_project`,`to_site`,`remarks`) VALUES ('$transfer_id','$transfer_date','$from_project','$from_site','$to_project','$to_site','$remarks')";
     $result2 = $conn->query($query2);    
   
     

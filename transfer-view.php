@@ -30,7 +30,7 @@ $transfer_id=$_GET['no']; ?>
 							<div class="col-sm-6">	
 								<p>
 								<img src="images/Saif_Engineering_Logo_165X72.png" height="100px;"/>
-								<h5>E-engineering Ltd</h5><span>Payra Project</span></br></p></div>
+								<h5>E-engineering Ltd</h5><span>Waterlogging Project</span></br></p></div>
 							<div class="col-sm-6">
 								<table class="table table-bordered">
 									<tr>
@@ -46,7 +46,7 @@ $transfer_id=$_GET['no']; ?>
 										echo $rowd['transfer_date'] ?></td>
 									</tr>
 									<tr>
-										<th>From Warehouse:</th>
+										<th>From Site:</th>
 										<td>
 											<?php 
 											$dataresult =   getDataRowByTableAndId('inv_warehosueinfo', $rowd['from_warehouse']);
@@ -55,7 +55,7 @@ $transfer_id=$_GET['no']; ?>
 										</td>
 									</tr>
 									<tr>
-										<th>To warehouse:</th>
+										<th>To Site:</th>
 										<td>
 											<?php 
 											$dataresult =   getDataRowByTableAndId('inv_warehosueinfo', $rowd['to_warehouse']);
@@ -66,7 +66,7 @@ $transfer_id=$_GET['no']; ?>
 								</table>
 							</div>
 						</div>
-						<center><button class="btn btn-block btn-secondary challan">WAREHOUSE TRANSFER DETAILS</button></center>
+						<center><button class="btn btn-block btn-secondary challan">SITE TO SITE TRANSFER DETAILS</button></center>
 						<table class="table table-bordered" id="material_receive_list"> 
 							<thead>
 								<tr>

@@ -243,12 +243,6 @@
 								  };
 								  
 								</script>
-								
-                            </div>
-                        </div>
-						<div class="col-xs-6">
-                            <div style="border:1px solid gray;height:150px;width:150px;">
-								<img id="output" height="150px" width="150px"/>
                             </div>
                         </div>
                     </div>

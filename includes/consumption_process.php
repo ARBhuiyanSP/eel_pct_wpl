@@ -59,7 +59,7 @@ if (isset($_POST['consumption_submit']) && !empty($_POST['consumption_submit']))
 				$mbout_qty      = $quantity;
 				$mbout_val      = 0;
 				$mbprice        = 0;
-				$mbtype         = 'Issue';
+				$mbtype         = 'Consumption';
 				$mbserial       = '1.1';
 				$mbunit_id      = $project_id;
 				$mbserial_id    = 0;
@@ -197,7 +197,7 @@ if(isset($_POST['issue_update_submit']) && !empty($_POST['issue_update_submit'])
 				$mbout_qty      = $quantity;
 				$mbout_val      = 0;
 				$mbprice        = 0;
-				$mbtype         = 'Issue';
+				$mbtype         = 'Consumption';
 				$mbserial       = '1.1';
 				$mbunit_id      = $project_id;
 				$mbserial_id    = 0;

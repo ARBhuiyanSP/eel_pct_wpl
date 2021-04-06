@@ -108,7 +108,7 @@
 						<div class="col-xs-3">
                             <div class="form-group">
                                 <label>To Site</label>
-                                <select class="form-control" id="site_id0" name="site_id[]" required>
+                                <select class="form-control" id="site_id" name="site_id" required>
 									<option value="">Select</option>
 									<?php
 									$projectsData = getTableDataByTableName('inv_warehosueinfo');
@@ -238,11 +238,6 @@
                                         }
                                     };
                                 </script>
-                            </div>
-                        </div>
-                        <div class="col-xs-6">
-                            <div style="border:1px solid gray;height:150px;width:150px;">
-                                <img id="output" height="150px" width="150px"/>
                             </div>
                         </div>
                     </div>
