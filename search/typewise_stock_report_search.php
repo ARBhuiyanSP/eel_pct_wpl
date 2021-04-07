@@ -11,11 +11,11 @@
 		<button class="btn btn-info linktext" onclick="window.location.href='stock_report.php';"> Stock Report Search</button>
 		<button class="btn btn-info linktext" onclick="window.location.href='categorywise_stock_report.php';"> Categorywise Stock Report </button>
 		<button class="btn btn-success linktext"> Typeywise Stock Report </button>
-		<!-- <?php if($_SESSION['logged']['user_type'] !== 'whm') {?>
-		<button class="btn btn-info linktext" onclick="window.location.href='total_stock_report.php';"> Total Stock Report</button>
-		<button class="btn btn-info linktext" onclick="window.location.href='warehouse_stock_report.php';"> Warehouse Stock Report </button>
-		<button class="btn btn-info linktext" onclick="window.location.href='warehouse_categorywise_stock_report.php';"> Warehouse Categorywise Stock Report </button>
-		<?php } ?> -->
+		<?php if($_SESSION['logged']['user_type'] !== 'whm') {?>
+		<!-- <button class="btn btn-info linktext" onclick="window.location.href='total_stock_report.php';"> Total Stock Report</button> -->
+		<button class="btn btn-info linktext" onclick="window.location.href='site_stock_report.php';"> Site Stock Report </button>
+		<button class="btn btn-info linktext" onclick="window.location.href='site_categorywise_stock_report.php';"> Site Categorywise Stock Report </button>
+		<?php } ?> 
 	</div>
 
     <div class="card-body">
