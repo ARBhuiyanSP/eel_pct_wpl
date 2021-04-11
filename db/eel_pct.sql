@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 06, 2021 at 06:30 AM
+-- Generation Time: Apr 11, 2021 at 06:46 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.34
 
@@ -3027,6 +3027,13 @@ CREATE TABLE `inv_consumption` (
   `consumption_image` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `inv_consumption`
+--
+
+INSERT INTO `inv_consumption` (`id`, `consumption_id`, `consumption_date`, `received_by`, `receiver_phone`, `remarks`, `project_id`, `warehouse_id`, `consumption_by`, `approval_status`, `approved_by`, `approved_at`, `approval_remarks`, `consumption_image`) VALUES
+(5184, 'CON-S2001', '2021-04-06', '', '', 'test', '4', '19', '', 0, '', NULL, '', '');
+
 -- --------------------------------------------------------
 
 --
@@ -3049,6 +3056,13 @@ CREATE TABLE `inv_consumptiondetails` (
   `building_id` varchar(100) NOT NULL,
   `approval_status` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `inv_consumptiondetails`
+--
+
+INSERT INTO `inv_consumptiondetails` (`id`, `consumption_id`, `consumption_date`, `material_id`, `material_name`, `unit`, `consumption_qty`, `consumption_price`, `part_no`, `project_id`, `warehouse_id`, `package_id`, `building_id`, `approval_status`) VALUES
+(21169, 'CON-S2001', '2021-04-06', '07-01-001', '43', '3', 10, 0, '', '4', '19', '', '', 0);
 
 -- --------------------------------------------------------
 
@@ -3217,6 +3231,14 @@ CREATE TABLE `inv_issue` (
   `issue_image` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `inv_issue`
+--
+
+INSERT INTO `inv_issue` (`id`, `issue_id`, `issue_date`, `received_by`, `receiver_phone`, `remarks`, `project_id`, `warehouse_id`, `to_warehouse_id`, `issued_by`, `approval_status`, `approved_by`, `approved_at`, `approval_remarks`, `issue_image`) VALUES
+(5182, 'IS-WL001', '2021-04-06', 'Samim Hasan', '123456', 'test', '4', '10', '18', '', 0, '', NULL, '', ''),
+(5183, 'IS-WL002', '2021-04-06', 'Samim Hasan', '123456', 'test', '4', '10', '19', '', 0, '', NULL, '', '');
+
 -- --------------------------------------------------------
 
 --
@@ -3240,6 +3262,14 @@ CREATE TABLE `inv_issuedetail` (
   `building_id` varchar(100) NOT NULL,
   `approval_status` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `inv_issuedetail`
+--
+
+INSERT INTO `inv_issuedetail` (`id`, `issue_id`, `issue_date`, `material_id`, `material_name`, `unit`, `issue_qty`, `issue_price`, `part_no`, `project_id`, `warehouse_id`, `to_warehouse_id`, `package_id`, `building_id`, `approval_status`) VALUES
+(21170, 'IS-WL001', '2021-04-06', '07-01-001', '43', '3', 100, 0, '', '4', '10', '18', '', '', 0),
+(21171, 'IS-WL002', '2021-04-06', '07-01-001', '43', '3', 100, 0, '', '4', '10', '19', '', '', 0);
 
 -- --------------------------------------------------------
 
@@ -3680,6 +3710,18 @@ CREATE TABLE `inv_materialbalance` (
   `approval_status` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `inv_materialbalance`
+--
+
+INSERT INTO `inv_materialbalance` (`id`, `mb_ref_id`, `mb_materialid`, `mb_date`, `mbin_qty`, `mbin_val`, `mbout_qty`, `mbout_val`, `mbprice`, `mbtype`, `mbserial`, `mbserial_id`, `mbunit_id`, `jvno`, `part_no`, `project_id`, `warehouse_id`, `package_id`, `building_id`, `site_id`, `approval_status`) VALUES
+(31236, 'MRR-WL001', '07-01-001', '2021-04-06', 1000, 6000, 0, 0, 6, 'Receive', 1.1, '4', '0', 'MRR-WL001', '', '4', '10', '', '', '', 0),
+(31237, 'IS-WL001', '07-01-001', '2021-04-06', 0, 0, 100, 0, 0, 'Issue', 1.1, '4', '0', 'IS-WL001', '', '4', '10', '', '', '', 0),
+(31238, 'IS-WL001', '07-01-001', '2021-04-06', 100, 0, 0, 0, 0, 'Receive', 1.1, '4', '0', 'IS-WL001', '', '4', '18', '', '', '', 0),
+(31239, 'IS-WL002', '07-01-001', '2021-04-06', 0, 0, 100, 0, 0, 'Issue', 1.1, '4', '0', 'IS-WL002', '', '4', '10', '', '', '', 0),
+(31240, 'IS-WL002', '07-01-001', '2021-04-06', 100, 0, 0, 0, 0, 'Receive', 1.1, '4', '0', 'IS-WL002', '', '4', '19', '', '', '', 0),
+(31241, 'CON-S2001', '07-01-001', '2021-04-06', 0, 0, 10, 0, 0, 'Consumption', 1.1, '4', '0', 'CON-S2001', '', '4', '19', '', '', '', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -3995,6 +4037,13 @@ CREATE TABLE `inv_receive` (
   `mrr_image` varchar(10000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `inv_receive`
+--
+
+INSERT INTO `inv_receive` (`id`, `mrr_no`, `mrr_date`, `purchase_id`, `receive_acct_id`, `supplier_id`, `postedtogl`, `vat_challan_no`, `remarks`, `receive_type`, `project_id`, `warehouse_id`, `receive_unit_id`, `chk_year_end`, `receive_total`, `no_of_material`, `challanno`, `challan_date`, `jv_no`, `part_no`, `requisitionno`, `requisition_date`, `received_by`, `approval_status`, `approved_by`, `approved_at`, `approval_remarks`, `mrr_image`) VALUES
+(1379, 'MRR-WL001', '2021-04-06', 'PID-001', '6-14-010', 'SID-001', 0, 'VT-001', 'test', 'Credit', '4', '10', '1', NULL, 6000, 1000, 'SCN-001', '2021-04-06', NULL, '', 'RLP-001', '2021-04-06 00:00:00', '1', 0, '', '0000-00-00 00:00:00', '', '');
+
 -- --------------------------------------------------------
 
 --
@@ -4017,6 +4066,13 @@ CREATE TABLE `inv_receivedetail` (
   `warehouse_id` varchar(1000) NOT NULL,
   `approval_status` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `inv_receivedetail`
+--
+
+INSERT INTO `inv_receivedetail` (`id`, `mrr_no`, `material_id`, `material_name`, `unit_id`, `receive_qty`, `unit_price`, `sl_no`, `total_receive`, `rd_serial_id`, `part_no`, `project_id`, `warehouse_id`, `approval_status`) VALUES
+(1920, 'MRR-WL001', '07-01-001', '43', 3, 1000, 6, 1, 6000, '', '', '4', '10', 0);
 
 -- --------------------------------------------------------
 
@@ -4151,6 +4207,13 @@ CREATE TABLE `inv_supplierbalance` (
   `sb_partac_id` varchar(25) CHARACTER SET utf8 NOT NULL,
   `approval_status` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `inv_supplierbalance`
+--
+
+INSERT INTO `inv_supplierbalance` (`id`, `sb_ref_id`, `warehouse_id`, `sb_date`, `sb_supplier_id`, `sb_dr_amount`, `sb_cr_amount`, `sb_remark`, `sb_partac_id`, `approval_status`) VALUES
+(1170, 'MRR-WL001', '10', '2021-04-06', 'SID-001', 0, 6000, 'test', 'MRR-WL001', 0);
 
 -- --------------------------------------------------------
 
@@ -5427,11 +5490,14 @@ CREATE TABLE `qry_inv_issue` (
 -- (See below for the actual view)
 --
 CREATE TABLE `qry_typewiseconsumption` (
-`material_id` varchar(9)
-,`issue_qty` float
-,`type` varchar(100)
-,`issue_date` date
+`consumption_id` varchar(25)
+,`consumption_date` date
+,`material_id` varchar(9)
+,`consumption_qty` float
 ,`warehouse_id` varchar(100)
+,`project_id` varchar(25)
+,`package_id` varchar(100)
+,`building_id` varchar(100)
 );
 
 -- --------------------------------------------------------
@@ -6290,7 +6356,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `qry_typewiseconsumption`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `qry_typewiseconsumption`  AS SELECT `qry_inv_issue`.`material_id` AS `material_id`, `qry_inv_issue`.`issue_qty` AS `issue_qty`, `inv_material`.`type` AS `type`, `qry_inv_issue`.`issue_date` AS `issue_date`, `qry_inv_issue`.`warehouse_id` AS `warehouse_id` FROM (`inv_material` join `qry_inv_issue` on(`inv_material`.`material_id_code` = `qry_inv_issue`.`material_id`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `qry_typewiseconsumption`  AS SELECT `inv_consumption`.`consumption_id` AS `consumption_id`, `inv_consumption`.`consumption_date` AS `consumption_date`, `inv_consumptiondetails`.`material_id` AS `material_id`, `inv_consumptiondetails`.`consumption_qty` AS `consumption_qty`, `inv_consumption`.`warehouse_id` AS `warehouse_id`, `inv_consumption`.`project_id` AS `project_id`, `inv_consumptiondetails`.`package_id` AS `package_id`, `inv_consumptiondetails`.`building_id` AS `building_id` FROM (`inv_consumption` join `inv_consumptiondetails` on(`inv_consumption`.`consumption_id` = `inv_consumptiondetails`.`consumption_id`)) ;
 
 -- --------------------------------------------------------
 
@@ -6726,13 +6792,13 @@ ALTER TABLE `inv_complaindetails`
 -- AUTO_INCREMENT for table `inv_consumption`
 --
 ALTER TABLE `inv_consumption`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5184;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5185;
 
 --
 -- AUTO_INCREMENT for table `inv_consumptiondetails`
 --
 ALTER TABLE `inv_consumptiondetails`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21169;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21170;
 
 --
 -- AUTO_INCREMENT for table `inv_designation`
@@ -6762,13 +6828,13 @@ ALTER TABLE `inv_invoice_details`
 -- AUTO_INCREMENT for table `inv_issue`
 --
 ALTER TABLE `inv_issue`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5182;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5184;
 
 --
 -- AUTO_INCREMENT for table `inv_issuedetail`
 --
 ALTER TABLE `inv_issuedetail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21170;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21172;
 
 --
 -- AUTO_INCREMENT for table `inv_item_unit`
@@ -6798,7 +6864,7 @@ ALTER TABLE `inv_material`
 -- AUTO_INCREMENT for table `inv_materialbalance`
 --
 ALTER TABLE `inv_materialbalance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31236;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31242;
 
 --
 -- AUTO_INCREMENT for table `inv_materialcategory`
@@ -6852,13 +6918,13 @@ ALTER TABLE `inv_purchasedetail`
 -- AUTO_INCREMENT for table `inv_receive`
 --
 ALTER TABLE `inv_receive`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1379;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1380;
 
 --
 -- AUTO_INCREMENT for table `inv_receivedetail`
 --
 ALTER TABLE `inv_receivedetail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1920;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1921;
 
 --
 -- AUTO_INCREMENT for table `inv_return`
@@ -6888,7 +6954,7 @@ ALTER TABLE `inv_supplier`
 -- AUTO_INCREMENT for table `inv_supplierbalance`
 --
 ALTER TABLE `inv_supplierbalance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1170;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1171;
 
 --
 -- AUTO_INCREMENT for table `inv_technicianinfo`

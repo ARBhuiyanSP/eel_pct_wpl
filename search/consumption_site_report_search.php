@@ -8,11 +8,11 @@
 </style>
 <div class="card mb-3">
     <div class="card-header">
+	
 		<button class="btn btn-info linktext" onclick="window.location.href='consumption_report.php';"> Individual Consumption Report</button>
 		<button class="btn btn-info linktext" onclick="window.location.href='consumption_type_report.php';"> Type Wise Consumption Report</button>
-        <button class="btn btn-success linktext"> Material Groupwise Consumption Report</button> 
-		
-		<button class="btn btn-info linktext" onclick="window.location.href='consumption_site_report.php';"> Site Wise Consumption Report</button>
+        <button class="btn btn-info linktext" onclick="window.location.href='consumption_group_report.php';"> Material Groupwise Consumption Report</button>
+		<button class="btn btn-success linktext"> Site Wise Consumption Report</button>
 		</div>
     <div class="card-body">
         <form class="form-horizontal" action="" id="warehouse_stock_search_form" method="GET">
@@ -20,7 +20,47 @@
                 <table class="table table-borderless search-table">
                     <tbody>
                         <tr>  
-							
+							<td>
+                                <div class="form-group">
+									<label for="sel1">Project:</label>
+									<select class="form-control select2" id="project_id" name="project_id">
+										<?php
+										$project = getTableDataByTableName('projects','','name');
+										if (isset($project) && !empty($project)) {
+											foreach ($project as $data) {
+												if($_GET['project_id'] == $data['id']){
+													$selected	= 'selected';
+													}else{
+													$selected	= '';
+													}
+												?>
+												<option value="<?php  echo $data['id'] ?>" <?php echo $selected; ?>><?php echo $data['name'] ?></option>
+											<?php }
+										} ?>
+									</select>
+								</div>
+                            </td>
+							<td>
+                                <div class="form-group">
+									<label>Site</label>
+									<select class="form-control select2" id="warehouse_id" name="warehouse_id">
+										<option value="">Select</option>
+										<?php
+										$warehouse = getTableDataByTableName('inv_warehosueinfo','','name');
+										if (isset($warehouse) && !empty($warehouse)) {
+											foreach ($warehouse as $data) {
+													if($_GET['warehouse_id'] == $data['id']){
+													$selected	= 'selected';
+													}else{
+													$selected	= '';
+													}
+												?>
+												<option value="<?php  echo $data['id'] ?>" <?php echo $selected; ?>><?php echo $data['name'] ?></option>
+											<?php }
+										} ?>
+									</select>
+								</div>
+                            </td>
 							<td>
                                 <div class="form-group">
                                     <label for="todate">From Date</label>
@@ -52,7 +92,12 @@ if(isset($_GET['submit'])){
 	
 	$from_date		=	$_GET['from_date'];
 	$to_date		=	$_GET['to_date'];
-	$warehouse_id	=	$_SESSION['logged']['warehouse_id'];
+	//$warehouse_id	=	$_SESSION['logged']['warehouse_id'];
+	$warehouse_id	=	$_GET['warehouse_id'];
+	
+	$project_id		=	$_GET['project_id'];
+	//$package_id		=	$_GET['package_id'];
+	
 	
 	
 ?>
@@ -66,8 +111,13 @@ if(isset($_GET['submit'])){
 					<center>
 						<p>
 							<img src="images/Saif_Engineering_Logo_165X72.png" height="100px;"/><br>
-							<span>Material Groupwise Consumption Report</span><br>
+							<b>Site Wise Consumption Report</b><br>
 							From <span class="dtext"><?php echo date("jS F Y", strtotime($from_date));?></span> To  <span class="dtext"><?php echo date("jS F Y", strtotime($to_date));?> </span><br>
+							<?php
+							$dataresult =   getDataRowByTableAndId('inv_warehosueinfo', $warehouse_id);
+							
+							?>
+							<b>Site : <?php echo (isset($dataresult) && !empty($dataresult) ? $dataresult->name : ''); ?></b><br>
 						</p>
 					</center>
 				</div>
@@ -78,20 +128,19 @@ if(isset($_GET['submit'])){
 							<th>Material ID</th>
 							<th>Material Name</th>
 							<th>Unit</th>
-							
-							<th>Quantity</th>
-							
+							<th>Consumption Qty</th>
 						</tr>
 					</thead>
 					<tbody>
 					<?php
 						/* if($_SESSION['logged']['user_type'] !== 'whm'){
-							$sql	=	"SELECT * FROM qry_inv_issue WHERE issue_date BETWEEN '$from_date' AND '$to_date'  GROUP BY `material_id`";
+							$sql	=	"SELECT * FROM `qry_inv_issue` WHERE `project_id` = '$project_id' AND `package_id` = '$package_id' AND `issue_date` BETWEEN '$from_date' AND '$to_date'  GROUP BY `material_id`";
 						}else{
-							$sql	=	"SELECT * FROM qry_inv_issue WHERE warehouse_id = $warehouse_id AND issue_date BETWEEN '$from_date' AND '$to_date'  GROUP BY `material_id`";
+							$sql	=	"SELECT * FROM `qry_inv_issue` WHERE `warehouse_id` = '$warehouse_id' AND `project_id` = '$project_id' AND `package_id` = '$package_id'  AND `issue_date` BETWEEN '$from_date' AND '$to_date'  GROUP BY `material_id`";
 						} */
 						
-						$sql	=	"SELECT * FROM inv_consumptiondetails WHERE warehouse_id = $warehouse_id AND consumption_date BETWEEN '$from_date' AND '$to_date'  GROUP BY `material_id`";
+							$sql	=	"SELECT * FROM `inv_consumptiondetails` WHERE `warehouse_id` = '$warehouse_id' AND `project_id` = '$project_id' AND `consumption_date` BETWEEN '$from_date' AND '$to_date'  GROUP BY `material_id`";
+						
 						
 						$result = mysqli_query($conn, $sql);
 						while($row=mysqli_fetch_array($result))
@@ -117,21 +166,10 @@ if(isset($_GET['submit'])){
 								echo $rowunit['unit_name'];
 								
 								?>
-								
 							</td>
-							
-							
-						
-							
-							
-							<td style="text-align:right;"><?php
-							/* if($_SESSION['logged']['user_type'] !== 'whm'){
-								$sqloutqty = "SELECT SUM(`issue_qty`) AS totalout FROM `qry_inv_issue` WHERE `material_id`='$material_id' AND `issue_date` BETWEEN '$from_date' AND '$to_date'  GROUP BY `material_id`";
-							}else{
-								$sqloutqty = "SELECT SUM(`issue_qty`) AS totalout FROM `qry_inv_issue` WHERE `material_id`='$material_id' AND `warehouse_id` = '$warehouse_id' AND `issue_date` BETWEEN '$from_date' AND '$to_date'  GROUP BY `material_id`";
-							} */
-							
-							$sqloutqty = "SELECT SUM(`consumption_qty`) AS totalout FROM `inv_consumptiondetails` WHERE `material_id`='$material_id' AND `warehouse_id` = '$warehouse_id' AND `consumption_date` BETWEEN '$from_date' AND '$to_date'  GROUP BY `material_id`";
+							<td>
+							<?php
+							$sqloutqty = "SELECT SUM(`consumption_qty`) AS `totalout` FROM `inv_consumptiondetails` where `warehouse_id` = '$warehouse_id' AND `project_id` = '$project_id' AND `consumption_date` BETWEEN '$from_date' AND '$to_date' and  `material_id` = '$material_id' GROUP BY `material_id`";
 							
 							
 							$resultoutqty = mysqli_query($conn, $sqloutqty);
@@ -141,7 +179,6 @@ if(isset($_GET['submit'])){
 							
 							
 							?></td>
-							
 							
 							
 							

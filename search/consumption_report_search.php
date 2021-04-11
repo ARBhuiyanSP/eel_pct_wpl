@@ -101,23 +101,27 @@ if(isset($_GET['submit'])){
 							<th>Material ID</th>
 							<th>Material Name</th>
 							<th>Unit</th>
-							<th>Issue Date</th>
-							<th>Issue Qty</th>
+							<th>Consumption Date</th>
+							<th>Consumption Qty</th>
 						</tr>
 					</thead>
 					<tbody>
 					<?php
 					
 						$totalQty = 0;
-						if($_SESSION['logged']['user_type'] !== 'whm'){
-							$sql	=	"SELECT * FROM `inv_issuedetail` WHERE `material_id` = '$material_id' AND `issue_date` BETWEEN '$from_date' AND '$to_date'";
+						/* if($_SESSION['logged']['user_type'] !== 'whm'){
+							$sql	=	"SELECT * FROM `inv_consumptiondetails` WHERE `material_id` = '$material_id' AND `consumption_date` BETWEEN '$from_date' AND '$to_date'";
 						}else{
-							$sql	=	"SELECT * FROM `inv_issuedetail` WHERE `warehouse_id` = '$warehouse_id' AND `material_id` = '$material_id' AND `issue_date` BETWEEN '$from_date' AND '$to_date'";
-						}
+							$sql	=	"SELECT * FROM `inv_consumptiondetails` WHERE `warehouse_id` = '$warehouse_id' AND `material_id` = '$material_id' AND `consumption_date` BETWEEN '$from_date' AND '$to_date'";
+						} */
+						
+							$sql	=	"SELECT * FROM `inv_consumptiondetails` WHERE `warehouse_id` = '$warehouse_id' AND `material_id` = '$material_id' AND `consumption_date` BETWEEN '$from_date' AND '$to_date'";
+						
+						
 						$result = mysqli_query($conn, $sql);
 						while($row=mysqli_fetch_array($result))
 						{
-							$totalQty += $row['issue_qty'];
+							$totalQty += $row['consumption_qty'];
 					?>
 						<tr>
 							<td><?php echo $row['material_id']; ?></td>
@@ -143,8 +147,8 @@ if(isset($_GET['submit'])){
 							</td>
 							
 							
-							<td><?php echo $row['issue_date']; ?></td>
-							<td style="text-align:right;"><?php echo number_format((float)$row['issue_qty'], 2, '.', ''); ?></td>
+							<td><?php echo $row['consumption_date']; ?></td>
+							<td style="text-align:right;"><?php echo number_format((float)$row['consumption_qty'], 2, '.', ''); ?></td>
 						</tr>
 						<?php
 							}?>
