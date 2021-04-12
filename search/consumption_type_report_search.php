@@ -103,9 +103,9 @@ if(isset($_GET['submit'])){
 					<tbody>
 					<?php
 					if($_SESSION['logged']['user_type'] !== 'whm'){
-							$sql	=	"SELECT * FROM `qry_typewiseconsumption` WHERE `type` = '$type_id' AND `issue_date` BETWEEN '$from_date' AND '$to_date'  GROUP BY `material_id`";
+							$sql	=	"SELECT * FROM `qry_typewiseconsumption` WHERE `type` = '$type_id' AND `consumption_date` BETWEEN '$from_date' AND '$to_date'  GROUP BY `material_id`";
 						}else{
-							$sql	=	"SELECT * FROM `qry_typewiseconsumption` WHERE `warehouse_id` = '$warehouse_id' and `type` = '$type_id' AND `issue_date` BETWEEN '$from_date' AND '$to_date'  GROUP BY `material_id`";
+							$sql	=	"SELECT * FROM `qry_typewiseconsumption` WHERE `warehouse_id` = '$warehouse_id' and `type` = '$type_id' AND `consumption_date` BETWEEN '$from_date' AND '$to_date'  GROUP BY `material_id`";
 						}
 					
 						$result = mysqli_query($conn, $sql);
@@ -141,9 +141,9 @@ if(isset($_GET['submit'])){
 							
 							<td style="text-align:right;"><?php
 							if($_SESSION['logged']['user_type'] !== 'whm'){
-								$sqloutqty = "SELECT SUM(`issue_qty`) AS totalout FROM `qry_typewiseconsumption` WHERE `material_id`='$material_id' AND `issue_date` BETWEEN '$from_date' AND '$to_date'  GROUP BY `material_id`";
+								$sqloutqty = "SELECT SUM(`consumption_qty`) AS totalout FROM `qry_typewiseconsumption` WHERE `material_id`='$material_id' AND `consumption_date` BETWEEN '$from_date' AND '$to_date'  GROUP BY `material_id`";
 							}else{
-								$sqloutqty = "SELECT SUM(`issue_qty`) AS totalout FROM `qry_typewiseconsumption` WHERE `material_id`='$material_id' AND `warehouse_id` = '$warehouse_id' AND `issue_date` BETWEEN '$from_date' AND '$to_date'  GROUP BY `material_id`";
+								$sqloutqty = "SELECT SUM(`consumption_qty`) AS totalout FROM `qry_typewiseconsumption` WHERE `material_id`='$material_id' AND `warehouse_id` = '$warehouse_id' AND `consumption_date` BETWEEN '$from_date' AND '$to_date'  GROUP BY `material_id`";
 							}
 							
 							$resultoutqty = mysqli_query($conn, $sqloutqty);

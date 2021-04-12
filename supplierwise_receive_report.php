@@ -3,12 +3,13 @@
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="#">Receive Report Filters</a>
+            <a href="#">Receive Report Filters Filters</a>
         </li>
-        <li class="breadcrumb-item active">Receive Report Search</li>
+        <li class="breadcrumb-item active">Supplierwise Receive Report Search</li>
+		
     </ol>
     <!-- receive search start here -->
-    <?php include 'search/receive_report_search.php'; ?>
+    <?php include 'search/supplierwise_receive_report_search.php'; ?>
     <!-- end receive search -->
 
 
