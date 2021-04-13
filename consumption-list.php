@@ -17,7 +17,7 @@ include 'header.php';
 						<th>Consumption ID</th>
 						<th>Consumption Date</th>
 						<th>Project</th>
-						<th>Ware House</th>
+						<th>Site</th>
 					    <th>Action</th>
 					</tr>
 				</thead>

@@ -17,7 +17,7 @@ include 'header.php';
 						<th>Issue ID</th>
 						<th>Issue Date</th>
 						<th>Project</th>
-						<th>Ware House</th>
+						<th>To Site</th>
 					     <th>Action</th>
 					</tr>
 				</thead>
@@ -46,7 +46,7 @@ include 'header.php';
 								</td>
 								<td>
 									<?php 
-									$dataresult =   getDataRowByTableAndId('inv_warehosueinfo', $item['warehouse_id']);
+									$dataresult =   getDataRowByTableAndId('inv_warehosueinfo', $item['to_warehouse_id']);
 									echo (isset($dataresult) && !empty($dataresult) ? $dataresult->name : '');
 									?>
 								</td>
