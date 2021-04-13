@@ -13,8 +13,8 @@
 <script src="https://res.cloudinary.com/dxfq3iotg/raw/upload/v1569818907/jquery.table2excel.min.js"></script>
 <div class="card mb-3">
     <div class="card-header">
-        <button class="btn btn-success linktext">Movement Report Search</button>
-		<button class="btn btn-info linktext" onclick="window.location.href='#'"> Typewise Movement Report </button>
+        <button class="btn btn-info linktext" onclick="window.location.href='movement_report.php'">Movement Report Search</button>
+		<button class="btn btn-success linktext"> Typewise Movement Report </button>
 		<button class="btn btn-info linktext" onclick="window.location.href='#'"> Sitewise Movement Report </button>
 		<button class="btn btn-info linktext" onclick="window.location.href='#'"> Categorywise Movement Report </button>
 	</div>

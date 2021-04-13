@@ -2,11 +2,20 @@
 .dtext{
 	text-decoration:underline;
 }
+.linktext{
+	font-size:12px;
+}
+.table th, .table td{
+	padding:5px;
+}
 </style>
 <div class="card mb-3">
     <div class="card-header">
-        <i class="fas fa-search"></i>
-        Issue Report Search</div>
+		<button class="btn btn-success linktext">Issue Report Search</button>
+		<button class="btn btn-info linktext" onclick="window.location.href='#'"> Materialwise Issue Report </button>
+		<button class="btn btn-info linktext" onclick="window.location.href='#'"> Sitewise Movement Report </button>
+		<button class="btn btn-info linktext" onclick="window.location.href='#'"> Typewise Movement Report </button>
+	</div>
     <div class="card-body">
         <form class="form-horizontal" action="" id="warehouse_stock_search_form" method="GET">
             <div class="table-responsive">          

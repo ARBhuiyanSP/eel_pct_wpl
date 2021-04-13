@@ -8,7 +8,7 @@
         <li class="breadcrumb-item active">List</li>
     </ol>
     <!-- receive search start here -->
-    <?php include 'search/movement_report_search.php'; ?>
+    <?php include 'search/typewise_movement_report_search.php'; ?>
     <!-- end receive search -->
 
 
