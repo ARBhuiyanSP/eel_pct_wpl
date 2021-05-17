@@ -102,4 +102,24 @@ if(isset($_POST['package_update_submit']) && !empty($_POST['package_update_submi
     exit();
 }
 
+
+/*******************************************************************************
+ * The following code will
+ * Insert Brand Info at inv_item_brand table
+ */
+if (isset($_POST['brand_submit']) && !empty($_POST['brand_submit'])) {
+
+        
+        /*
+         *  Insert Data Into inv_receivedetail Table:
+        */ 
+        $brand_name		= $_POST['brand_name'];    
+               
+        $query = "INSERT INTO `inv_item_brand` (`brand_name`) VALUES ('$brand_name')";
+        $conn->query($query);
+        
+		$_SESSION['success']    =   "Brand Entry process have been successfully completed.";
+		header("location: brand_entry.php");
+		exit();
+}
 ?>
