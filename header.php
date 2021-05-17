@@ -34,7 +34,7 @@ include 'includes/consumption_process.php';
   <meta name="description" content="">
   <meta name="author" content="">
   <link rel="icon" href="images/fav.png">
-  <title>Saif Inventory</title>
+  <title>Water Logging Project</title>
   <!-- Custom fonts for this template-->
   <link href="css/fontawesome/css/all.min.css" rel="stylesheet" type="text/css">
   <!-- Page level plugin CSS-->
