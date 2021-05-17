@@ -59,6 +59,10 @@
                 <i class="fa fa-bullseye" aria-hidden="true" style="color: #007BFF;"></i>
                 <span class="sub_menu_text_design"> UOM</span>
             </a>
+            <a class="dropdown-item" href="brand_entry.php">
+                <i class="fa fa-bullseye" aria-hidden="true" style="color: #007BFF;"></i>
+                <span class="sub_menu_text_design"> Brand</span>
+            </a>
             <a class="dropdown-item" href="supplier_entry.php">
                 <i class="fa fa-bullseye" aria-hidden="true" style="color: #007BFF;"></i>
                 <span class="sub_menu_text_design"> Supplier Add</span>
