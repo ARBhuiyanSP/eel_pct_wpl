@@ -89,7 +89,7 @@
                         </div>
                         <div class="col-xs-2">
                             <div class="form-group">
-                                <label for="id">Supplier</label><span class="reqfield"> ***required</span>
+                                <label for="id">Supplier</label><span class="reqfield"> ***</span>
                                 <select class="form-control" id="supplier_name" name="supplier_name" required onchange="getItemCodeByParam(this.value, 'suppliers', 'code', 'supplier_id');">
                                     <option value="">Select</option>
                                     <?php
@@ -149,12 +149,12 @@
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dynamic_field">
                                 <thead>
-                                <th>Material Name<span class="reqfield"> ***required</span></th>
+                                <th>Material Name<span class="reqfield"> ***</span></th>
                                 <th>Material ID</th>
                                 <th width="10%">Unit</th>
-                                <th>Brand Name</th>
-                                <th>Qty<span class="reqfield"> ***required</span></th>
-                                <th>Unit Price<span class="reqfield"> ***required</span></th>
+                                <th>Brand</th>
+                                <th>Qty<span class="reqfield"> ***</span></th>
+                                <th>Unit Price<span class="reqfield"> ***</span></th>
                                 <th>Total Amount</th>
                                 <th></th>
                                 </thead>
@@ -192,7 +192,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select class="form-control" id="brand0" name="brand[]" readonly>
+                                            <select class="form-control material_select_2" id="brand0" name="brand[]">
                                                 <option value="">Select Brand</option>
                                                 <?php
                                                 $brandData = getmaterialbrand();
@@ -279,13 +279,13 @@
                                                     foreach ($projectsData as $data) {
                                                         ?><option value="<?php echo $data['id']; ?>"><?php echo $data['material_name']; ?></option><?php }
                                                 }
-                                                ?></select></td><td><input type="text" name="material_id[]" id="material_id' + i + '" class="form-control" required readonly></td><td><select class="form-control select2" id="unit' + i + '" name="unit[]' + i + '" required onchange="getAppendItemCodeByParam(' + i + ",'inv_material'" + ",'material_id_code'" + ",'material_id''" + ",'qty_unit'" + ')"><option value="">Select</option><?php
+                                                ?></select></td><td><input type="text" name="material_id[]" id="material_id' + i + '" class="form-control" required readonly></td><td><select class="form-control select2" id="unit' + i + '" name="unit[]' + i + '" required readonly onchange="getAppendItemCodeByParam(' + i + ",'inv_material'" + ",'material_id_code'" + ",'material_id''" + ",'qty_unit'" + ')"><option value="">Select</option><?php
                                                 $projectsData = getTableDataByTableName('inv_item_unit', '', 'unit_name');
                                                 if (isset($projectsData) && !empty($projectsData)) {
                                                     foreach ($projectsData as $data) {
                                                         ?><option value="<?php echo $data['id']; ?>"><?php echo $data['unit_name']; ?></option><?php }
                                                 }
-                                                ?></select></td><td><select class="form-control select2" id="brand' + i + '" name="brand[]' + i + '" ><option value="">Select</option><?php
+                                                ?></select></td><td><select class="form-control material_select_2" id="brand' + i + '" name="brand[]' + i + '" ><option value="">Select</option><?php
                                                 $projectsData = getmaterialbrand();
                                                 if (isset($projectsData) && !empty($projectsData)) {
                                                     foreach ($projectsData as $data) {
