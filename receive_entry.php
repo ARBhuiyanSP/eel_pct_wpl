@@ -152,8 +152,8 @@
                                 <th>Material Name<span class="reqfield"> ***</span></th>
                                 <th>Material ID</th>
                                 <th width="10%">Unit</th>
-                                <th>Brand</th>
-                                <th>Qty<span class="reqfield"> ***</span></th>
+                                <th width="10%">Brand</th>
+                                <th width="7%">Qty<span class="reqfield"> ***</span></th>
                                 <th>Unit Price<span class="reqfield"> ***</span></th>
                                 <th>Total Amount</th>
                                 <th></th>
@@ -193,7 +193,7 @@
                                         </td>
                                         <td>
                                             <select class="form-control material_select_2" id="brand0" name="brand[]">
-                                                <option value="">Select Brand</option>
+                                                <option value="">Select</option>
                                                 <?php
                                                 $brandData = getmaterialbrand();
                                                 if (isset($brandData) && !empty($brandData)) {

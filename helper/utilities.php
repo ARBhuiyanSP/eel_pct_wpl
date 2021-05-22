@@ -812,7 +812,7 @@ function convertNumberToWords(float $number)
     
     function getmaterialbrand(){
         global $conn;
-        $sql = "SELECT brand_name FROM inv_material group by brand_name order by brand_name";
+        $sql = "SELECT brand_name FROM inv_item_brand";
         $result = $conn->query($sql);
         $dataContainer   =   [];
         if ($result->num_rows > 0) {
