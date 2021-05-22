@@ -80,7 +80,7 @@ if (isset($_POST['receive_submit']) && !empty($_POST['receive_submit'])) {
 		
 		
                
-        $query = "INSERT INTO `inv_receivedetail` (`mrr_no`,`material_id`,`material_name`,`unit_id`,`receive_qty`,`unit_price`,`sl_no`,`total_receive`,`part_no`,`project_id`,`warehouse_id`,`approval_status`) VALUES ('$mrr_no','$material_id','$material_name','$unit','$quantity','$unit_price','1','$totalamount','$brand','$project_id','$warehouse_id','$approval_status')";
+        $query = "INSERT INTO `inv_receivedetail` (`mrr_no`,`material_id`,`material_name`,`	brand_id`,`unit_id`,`receive_qty`,`unit_price`,`sl_no`,`total_receive`,`part_no`,`project_id`,`warehouse_id`,`approval_status`) VALUES ('$mrr_no','$material_id','$material_name','$brand','$unit','$quantity','$unit_price','1','$totalamount','$brand','$project_id','$warehouse_id','$approval_status')";
         $conn->query($query);
 		
 		
