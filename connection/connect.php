@@ -6,7 +6,7 @@ global $conn;
 $servername = "localhost";
 $username   = "root";
 $password   = "";
-$dbname     = "eel_pct";
+$dbname     = "eel_wlp";
 
 // Create connection
 $conn       = new mysqli($servername, $username, $password, $dbname);
