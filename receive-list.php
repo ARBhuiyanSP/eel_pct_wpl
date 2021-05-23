@@ -15,7 +15,7 @@
 						<tr>
 							<th>MRR No</th>
 							<th>MRR Date</th>
-							<th>Project</th>
+							<th>Purchase ID</th>
 							<th>Supplier name</th>
 							<th>Total Qty</th>
 							<th>Total Amount</th>
@@ -40,12 +40,7 @@
 								<?php  }?>
 									<td><?php echo $item['mrr_no']; ?></td>
 									<td><?php echo $item['mrr_date']; ?></td>
-									<td>
-										<?php 
-										$dataresult =   getDataRowByTableAndId('projects', $item['project_id']);
-										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->name : '');
-										?>
-									</td>
+									<td><?php echo $item['purchase_id']; ?></td>
 									<td>
 										<?php 
 										$supplier_id = $item['supplier_id'];
