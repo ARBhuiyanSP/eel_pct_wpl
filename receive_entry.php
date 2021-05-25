@@ -89,7 +89,7 @@
                         </div>
                         <div class="col-xs-2">
                             <div class="form-group">
-                                <label for="id">Supplier</label><span class="reqfield"> ***</span>
+                                <label for="id">Supplier</label><span class="reqfield"> ***required</span>
                                 <select class="form-control" id="supplier_name" name="supplier_name" required onchange="getItemCodeByParam(this.value, 'suppliers', 'code', 'supplier_id');">
                                     <option value="">Select</option>
                                     <?php
@@ -149,12 +149,12 @@
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dynamic_field">
                                 <thead>
-                                <th>Material Name<span class="reqfield"> ***</span></th>
+                                <th>Material Name<span class="reqfield"> ***required</span></th>
                                 <th>Material ID</th>
                                 <th width="10%">Unit</th>
-                                <th width="10%">Brand</th>
-                                <th width="7%">Qty<span class="reqfield"> ***</span></th>
-                                <th>Unit Price<span class="reqfield"> ***</span></th>
+                                <th>Brand</th>
+                                <th>Qty<span class="reqfield"> ***required</span></th>
+                                <th>Unit Price<span class="reqfield"> ***required</span></th>
                                 <th>Total Amount</th>
                                 <th></th>
                                 </thead>
@@ -243,6 +243,12 @@
 								  };
 								  
 								</script>
+								
+                            </div>
+                        </div>
+						<div class="col-xs-6">
+                            <div style="border:1px solid gray;height:150px;width:150px;">
+								<img id="output" height="150px" width="150px"/>
                             </div>
                         </div>
                     </div>
@@ -279,7 +285,7 @@
                                                     foreach ($projectsData as $data) {
                                                         ?><option value="<?php echo $data['id']; ?>"><?php echo $data['material_name']; ?></option><?php }
                                                 }
-                                                ?></select></td><td><input type="text" name="material_id[]" id="material_id' + i + '" class="form-control" required readonly></td><td><select class="form-control select2" id="unit' + i + '" name="unit[]' + i + '" required readonly onchange="getAppendItemCodeByParam(' + i + ",'inv_material'" + ",'material_id_code'" + ",'material_id''" + ",'qty_unit'" + ')"><option value="">Select</option><?php
+                                                ?></select></td><td><input type="text" name="material_id[]" id="material_id' + i + '" class="form-control" required readonly></td><td><select class="form-control select2" id="unit' + i + '" name="unit[]' + i + '" required onchange="getAppendItemCodeByParam(' + i + ",'inv_material'" + ",'material_id_code'" + ",'material_id''" + ",'qty_unit'" + ')"><option value="">Select</option><?php
                                                 $projectsData = getTableDataByTableName('inv_item_unit', '', 'unit_name');
                                                 if (isset($projectsData) && !empty($projectsData)) {
                                                     foreach ($projectsData as $data) {
@@ -289,7 +295,7 @@
                                                 $projectsData = getmaterialbrand();
                                                 if (isset($projectsData) && !empty($projectsData)) {
                                                     foreach ($projectsData as $data) {
-                                                        ?><option value="<?php echo $data['id']; ?>"><?php echo $data['brand_name']; ?></option><?php }
+                                                        ?><option value="<?php echo $data['brand_name']; ?>"><?php echo $data['brand_name']; ?></option><?php }
                                                 }
                                                 ?></select></td><td><input type="text" name="quantity[]" id="quantity' + i + '" onchange="sum(0)" class="form-control" required></td><td><input type="text" name="unit_price[]" id="unit_price' + i + '" onchange="sum(0)" class="form-control" required></td><td><input type="text" name="totalamount[]" id="sum' + i + '" class="form-control"></td><td><button type="button" name="remove" id="' + i + '" class="btn btn_remove" style="background-color:#f26522;color:#ffffff;">X</button></td></tr>');
 												$(".material_select_2").select2();

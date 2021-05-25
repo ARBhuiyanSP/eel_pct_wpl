@@ -9,12 +9,13 @@
 </style>
 <div class="card mb-3">
     <div class="card-header">
-		<button class="btn btn-success linktext"> Receive Report</button>
+		<button class="btn btn-info linktext" onclick="window.location.href='receive_report.php';"> Receive Report</button>
 		<button class="btn btn-info linktext" onclick="window.location.href='supplierwise_receive_report.php';"> Supplierwise Receive Report </button>
 		<button class="btn btn-info linktext" onclick="window.location.href='materialwise_receive_report.php'"> Materialwise Receive Report </button>
 		<button class="btn btn-info linktext" onclick="window.location.href='powise_receive_report.php'"> PO wise Receive Report </button>
-		<button class="btn btn-info linktext" onclick="window.location.href='typewise_receive_report.php'"> Typewise Receive Report </button>
+		<button class="btn btn-success linktext"> Typewise Receive Report </button>  
 	</div>
+
     <div class="card-body">
         <form class="form-horizontal" action="" id="warehouse_stock_search_form" method="GET">
             <div class="table-responsive">          
@@ -22,19 +23,50 @@
                     <tbody>
                         <tr>  
 							<td>
+								<div class="form-group">
+									<label for="id">Supplier</label>
+									<select class="form-control select2" id="supplier_name" name="supplier_name" required onchange="getItemCodeByParam(this.value, 'suppliers', 'code', 'supplier_id');">
+										<option value="">Select</option>
+										<?php
+										$projectsData = getTableDataByTableName('suppliers');
+
+										if (isset($projectsData) && !empty($projectsData)) {
+											foreach ($projectsData as $data) {
+												if($_GET['supplier_name'] == $data['id']){
+													$selected	= 'selected';
+													}else{
+													$selected	= '';
+													}
+													?>
+												<option value="<?php echo $data['id']; ?>" <?php echo $selected; ?>><?php echo $data['name']; ?></option>
+												<?php
+											}
+										}
+										?>
+									</select>
+								</div>
+							</td>
+							<td style="width:10%">
+							
+								<div class="form-group">
+									<label for="id">Supplier ID</label>
+									<input type="text" name="supplier_id" id="supplier_id" class="form-control" value="<?php if(isset($_GET['supplier_id'])){ echo $_GET['supplier_id']; } ?>" required>
+								</div>
+							</td>
+							<td style="width:10%">
                                 <div class="form-group">
                                     <label for="todate">From Date</label>
                                     <input type="text" class="form-control" id="from_date" name="from_date" value="<?php if(isset($_GET['from_date'])){ echo $_GET['from_date']; } ?>" autocomplete="off" required >
                                 </div>
                             </td>
-							<td>
+							<td style="width:10%">
                                 <div class="form-group">
                                     <label for="todate">To Date</label>
                                     <input type="text" class="form-control" id="to_date" name="to_date" value="<?php if(isset($_GET['to_date'])){ echo $_GET['to_date']; } ?>" autocomplete="off" required >
                                 </div>
                             </td>
 							
-							<td>
+							<td style="width:10%">
                                 <div class="form-group">
                                     <label for="todate">.</label>
 									<button type="submit" name="submit" class="form-control btn btn-primary">Search</button>
@@ -49,10 +81,15 @@
 </div>
 <?php
 if(isset($_GET['submit'])){
-	
+	$supplier_name	=	$_GET['supplier_name'];
+	$supplier_id	=	$_GET['supplier_id'];
 	$from_date		=	$_GET['from_date'];
 	$to_date		=	$_GET['to_date'];
 	$warehouse_id	=	$_SESSION['logged']['warehouse_id'];
+										$sqlunit	=	"SELECT * FROM `suppliers` WHERE `code` = '$supplier_id' ";
+										$resultunit = mysqli_query($conn, $sqlunit);
+										$rowunit=mysqli_fetch_array($resultunit);
+										$supplier	= $rowunit['name'];
 	
 	
 ?>
@@ -66,7 +103,8 @@ if(isset($_GET['submit'])){
 					<center>
 						<p>
 							<img src="images/Saif_Engineering_Logo_165X72.png" height="100px;"/><br>
-							<span>Material Receive Report</span><br>
+							<span>Supplier Receive Report</span><br>
+							<span><?php echo $supplier; ?></span><br>
 							From <span class="dtext"><?php echo date("jS F Y", strtotime($from_date));?></span> To  <span class="dtext"><?php echo date("jS F Y", strtotime($to_date));?> </span><br>
 						</p>
 					</center>
@@ -85,12 +123,7 @@ if(isset($_GET['submit'])){
 					</thead>
 					<tbody>
 						<?php
-							if($_SESSION['logged']['user_type'] !== 'whm'){
-								$sql	=	"SELECT * FROM `inv_receive` where `mrr_date` BETWEEN '$from_date' AND '$to_date';";
-							}else{
-								$sql	=	"SELECT * FROM `inv_receive` where `warehouse_id` = '$warehouse_id' AND `mrr_date` BETWEEN '$from_date' AND '$to_date';";
-							}
-							
+							$sql	=	"SELECT * FROM `inv_receive` where `supplier_id`='$supplier_id' AND `warehouse_id` = '$warehouse_id' AND `mrr_date` BETWEEN '$from_date' AND '$to_date';";
 							$result = mysqli_query($conn, $sql);
 							while($row=mysqli_fetch_array($result))
 							{
@@ -98,15 +131,8 @@ if(isset($_GET['submit'])){
 						<tr style="background-color:#E9ECEF;">
 							<td>MRR No : <?php echo $row['mrr_no']; ?></td>
 							<td>Date : <?php echo date("jS F Y", strtotime($row['mrr_date']));?></td>
-							<td>Challan No : <?php echo $row['challanno']; ?></td>
-							<td colspan="3">Supplier : <?php 
-								$supplier_id = $row['supplier_id'];
-								$sqlunit	=	"SELECT * FROM `suppliers` WHERE `code` = '$supplier_id' ";
-								$resultunit = mysqli_query($conn, $sqlunit);
-								$rowunit=mysqli_fetch_array($resultunit);
-								echo $rowunit['name'];
-								?>
-							</td>
+							<td>PO No : <?php echo $row['purchase_id']; ?></td>
+							<td colspan="3">Challan No : <?php echo $row['challanno']; ?></td>
 						</tr>
 						<?php
 							$totalQty = 0;
