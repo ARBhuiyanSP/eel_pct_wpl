@@ -130,6 +130,7 @@
                                         <tr>
                                             <th>Parent</th>
                                             <th>Sub Material</th>
+                                            <th>ID</th>
                                             <th>Code</th>
                                             <th>Material</th>
                                             <th>Material Min Stock</th>
@@ -156,6 +157,7 @@
                                                         echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_sub_description : '');
                                                         ?>
                                                     </td>
+                                                    <td><?php echo $item['id']; ?></td>
                                                     <td><?php echo $item['material_id_code']; ?></td>
                                                     <td><?php echo $item['material_description']; ?></td>
                                                     <td><?php echo $item['material_min_stock']; ?></td>
