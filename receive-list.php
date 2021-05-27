@@ -17,6 +17,7 @@
 							<th>MRR Date</th>
 							<th>Purchase ID</th>
 							<th>Supplier name</th>
+							<th>Challan No</th>
 							<th>Total Qty</th>
 							<th>Total Amount</th>
 							<th>Action</th>
@@ -50,6 +51,7 @@
 										echo $rowunit['name'];
 										?>
 									</td>
+									<td><?php echo $item['challanno']; ?></td>
 									<td><?php echo $item['no_of_material']; ?></td>
 									<td><?php echo $item['receive_total']; ?></td>
 									<td>
