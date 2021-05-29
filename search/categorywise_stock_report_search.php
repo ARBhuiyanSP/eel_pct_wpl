@@ -167,7 +167,9 @@ if(isset($_GET['submit'])){
 													$resultoutqty = mysqli_query($conn, $sqloutqty);
 													$rowoutqty = mysqli_fetch_object($resultoutqty) ;
 													
-													echo $rowinqty->totalin -$rowoutqty->totalout;
+													
+													$instock = $rowinqty->totalin -$rowoutqty->totalout;
+													echo number_format((float)$instock, 2, '.', '');
 												?>
 											</td>
 											<td>
