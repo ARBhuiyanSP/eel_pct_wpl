@@ -24,33 +24,26 @@
                         <tr>  
 							<td>
 								<div class="form-group">
-									<label for="id">Supplier</label>
-									<select class="form-control select2" id="supplier_name" name="supplier_name" required onchange="getItemCodeByParam(this.value, 'suppliers', 'code', 'supplier_id');">
+									<label for="id">PO Number</label>
+									<select class="form-control select2" id="purchase_id" name="purchase_id" required>
 										<option value="">Select</option>
 										<?php
-										$projectsData = getTableDataByTableName('suppliers');
+										$projectsData = getPONumber('inv_receive');
 
 										if (isset($projectsData) && !empty($projectsData)) {
 											foreach ($projectsData as $data) {
-												if($_GET['supplier_name'] == $data['id']){
+												if($_GET['purchase_id'] == $data['purchase_id']){
 													$selected	= 'selected';
 													}else{
 													$selected	= '';
 													}
 													?>
-												<option value="<?php echo $data['id']; ?>" <?php echo $selected; ?>><?php echo $data['name']; ?></option>
+												<option value="<?php echo $data['purchase_id']; ?>" <?php echo $selected; ?>><?php echo $data['purchase_id']; ?></option>
 												<?php
 											}
 										}
 										?>
 									</select>
-								</div>
-							</td>
-							<td style="width:10%">
-							
-								<div class="form-group">
-									<label for="id">Supplier ID</label>
-									<input type="text" name="supplier_id" id="supplier_id" class="form-control" value="<?php if(isset($_GET['supplier_id'])){ echo $_GET['supplier_id']; } ?>" required>
 								</div>
 							</td>
 							<td style="width:10%">
@@ -81,15 +74,10 @@
 </div>
 <?php
 if(isset($_GET['submit'])){
-	$supplier_name	=	$_GET['supplier_name'];
-	$supplier_id	=	$_GET['supplier_id'];
+	$purchase_id	=	$_GET['purchase_id'];
 	$from_date		=	$_GET['from_date'];
 	$to_date		=	$_GET['to_date'];
 	$warehouse_id	=	$_SESSION['logged']['warehouse_id'];
-										$sqlunit	=	"SELECT * FROM `suppliers` WHERE `code` = '$supplier_id' ";
-										$resultunit = mysqli_query($conn, $sqlunit);
-										$rowunit=mysqli_fetch_array($resultunit);
-										$supplier	= $rowunit['name'];
 	
 	
 ?>
@@ -103,8 +91,8 @@ if(isset($_GET['submit'])){
 					<center>
 						<p>
 							<img src="images/Saif_Engineering_Logo_165X72.png" height="100px;"/><br>
-							<span>Supplier Receive Report</span><br>
-							<span><?php echo $supplier; ?></span><br>
+							<span>PO Wise Receive Report</span><br>
+							<span>PO No: <?php echo $purchase_id; ?></span><br>
 							From <span class="dtext"><?php echo date("jS F Y", strtotime($from_date));?></span> To  <span class="dtext"><?php echo date("jS F Y", strtotime($to_date));?> </span><br>
 						</p>
 					</center>
@@ -123,7 +111,7 @@ if(isset($_GET['submit'])){
 					</thead>
 					<tbody>
 						<?php
-							$sql	=	"SELECT * FROM `inv_receive` where `supplier_id`='$supplier_id' AND `warehouse_id` = '$warehouse_id' AND `mrr_date` BETWEEN '$from_date' AND '$to_date';";
+							$sql	=	"SELECT * FROM `inv_receive` where `purchase_id`='$purchase_id' AND `mrr_date` BETWEEN '$from_date' AND '$to_date';";
 							$result = mysqli_query($conn, $sql);
 							while($row=mysqli_fetch_array($result))
 							{

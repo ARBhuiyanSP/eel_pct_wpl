@@ -41,6 +41,28 @@ function getTableDataByTableName($table, $order = 'asc', $column='id', $dataType
     }
     return $dataContainer;
 }
+
+function getPONumber($table, $order = 'asc', $column='id', $dataType = '') {
+    global $conn;
+    $dataContainer  =   [];
+    $sql = "SELECT * FROM $table GROUP BY `purchase_id`";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // output data of each row
+        if (isset($dataType) && $dataType == 'obj') {
+            while ($row = $result->fetch_object()) {
+                $dataContainer[] = $row;
+            }
+        } else {
+            while ($row = $result->fetch_assoc()) {
+                $dataContainer[] = $row;
+            }
+        }
+    }
+    return $dataContainer;
+}
+
 function getwarehouseinfo($table, $order = 'asc', $column='id', $dataType = '') {
     global $conn;
     $dataContainer  =   [];
