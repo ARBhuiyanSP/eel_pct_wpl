@@ -24,8 +24,8 @@
                         <tr>  
 							<td>
 								<div class="form-group">
-									<label for="id">Material</label>
-									<select class="form-control material_select_2" id="material_name" name="material_name" required onchange="getItemCodeByParam(this.value, 'inv_material', 'material_id_code', 'material_id');">
+									<label for="id">PO Number</label>
+									<select class="form-control material_select_2" id="material_name" name="material_name" required >
 										<option value="">Select</option>
 										<?php
 										$projectsData = get_product_with_category();
@@ -43,13 +43,6 @@
 										}
 										?>
 									</select>
-								</div>
-							</td>
-							<td style="width:10%">
-							
-								<div class="form-group">
-									<label for="id">Material ID</label>
-									<input type="text" name="material_id" id="material_id" class="form-control" value="<?php if(isset($_GET['material_id'])){ echo $_GET['material_id']; } ?>" required readonly>
 								</div>
 							</td>
 							<td style="width:10%">

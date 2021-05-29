@@ -149,14 +149,14 @@
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dynamic_field">
                                 <thead>
-                                <th>Material Name<span class="reqfield"> ***required</span></th>
-                                <th>Material ID</th>
-                                <th width="10%">Unit</th>
-                                <th>Brand</th>
-                                <th>Qty<span class="reqfield"> ***required</span></th>
-                                <th>Unit Price<span class="reqfield"> ***required</span></th>
-                                <th>Total Amount</th>
-                                <th></th>
+									<th>Material Name<span class="reqfield"> ***</span></th>
+									<th>Material ID</th>
+									<th width="10%">Unit</th>
+									<th width="10%">Brand</th>
+									<th>Qty<span class="reqfield"> ***</span></th>
+									<th>Unit Price<span class="reqfield"> ***</span></th>
+									<th>Total Amount</th>
+									<th></th>
                                 </thead>
                                 <tbody>
                                     <tr>
@@ -178,7 +178,7 @@
                                         <td><input type="text" name="material_id[]" id="material_id0" class="form-control" required readonly></td>
                                         <td>
                                             <select class="form-control" id="unit0" name="unit[]" required readonly>
-                                                <option value="">Select Unit</option>
+                                                <option value="">Select</option>
                                                 <?php
                                                 $projectsData = getTableDataByTableName('inv_item_unit', '', 'unit_name');
                                                 if (isset($projectsData) && !empty($projectsData)) {
@@ -285,7 +285,7 @@
                                                     foreach ($projectsData as $data) {
                                                         ?><option value="<?php echo $data['id']; ?>"><?php echo $data['material_name']; ?></option><?php }
                                                 }
-                                                ?></select></td><td><input type="text" name="material_id[]" id="material_id' + i + '" class="form-control" required readonly></td><td><select class="form-control select2" id="unit' + i + '" name="unit[]' + i + '" required onchange="getAppendItemCodeByParam(' + i + ",'inv_material'" + ",'material_id_code'" + ",'material_id''" + ",'qty_unit'" + ')"><option value="">Select</option><?php
+                                                ?></select></td><td><input type="text" name="material_id[]" id="material_id' + i + '" class="form-control" required readonly></td><td><select class="form-control select2" id="unit' + i + '" name="unit[]' + i + '" required onchange="getAppendItemCodeByParam(' + i + ",'inv_material'" + ",'material_id_code'" + ",'material_id''" + ",'qty_unit'" + ')" readonly><option value="">Select</option><?php
                                                 $projectsData = getTableDataByTableName('inv_item_unit', '', 'unit_name');
                                                 if (isset($projectsData) && !empty($projectsData)) {
                                                     foreach ($projectsData as $data) {

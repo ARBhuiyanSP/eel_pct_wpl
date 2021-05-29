@@ -202,7 +202,7 @@ if(isset($_POST['receive_update_submit']) && !empty($_POST['receive_update_submi
 			$material_name      = $_POST['material_name'][$count];
 			$material_id        = $_POST['material_id'][$count];
 			$unit               = $_POST['unit'][$count];
-			$part_no            = $_POST['part_no'][$count];
+			$brand            = $_POST['brand'][$count];
 			$quantity           = $_POST['quantity'][$count];
 			$no_of_material     = $no_of_material+$quantity;
 			$unit_price         = $_POST['unit_price'][$count];
@@ -225,7 +225,7 @@ if(isset($_POST['receive_update_submit']) && !empty($_POST['receive_update_submi
 			}
 			
 
-			$query = "INSERT INTO `inv_receivedetail` (`mrr_no`,`material_id`,`material_name`,`unit_id`,`receive_qty`,`unit_price`,`sl_no`,`total_receive`,`part_no`,`project_id`,`warehouse_id`) VALUES ('$mrr_no','$material_id','$material_name','$unit','$quantity','$unit_price','1','$totalamount','$part_no','$project_id','$warehouse_id')";
+			$query = "INSERT INTO `inv_receivedetail`(`mrr_no`,`material_id`,`material_name`,`brand_id`,`unit_id`,`receive_qty`,`unit_price`,`sl_no`,`total_receive`,`part_no`,`project_id`,`warehouse_id`,`approval_status`) VALUES ('$mrr_no','$material_id','$material_name','$brand','$unit','$quantity','$unit_price','1','$totalamount','$brand','$project_id','$warehouse_id','$approval_status')";
 			$conn->query($query);
 			/*
 			 *  Insert Data Into inv_materialbalance Table:
