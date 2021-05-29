@@ -25,7 +25,7 @@
 							<td>
 								<div class="form-group">
 									<label for="id">PO Number</label>
-									<select class="form-control select2" id="purchase_id" name="purchase_id" required>
+									<select class="form-control material_select_2" id="purchase_id" name="purchase_id" required>
 										<option value="">Select</option>
 										<?php
 										$projectsData = getPONumber('inv_receive');
