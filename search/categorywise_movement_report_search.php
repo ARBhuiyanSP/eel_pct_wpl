@@ -14,9 +14,9 @@
 <div class="card mb-3">
     <div class="card-header">
         <button class="btn btn-info linktext" onclick="window.location.href='movement_report.php'">Movement Report Search</button>
-		<button class="btn btn-success linktext"> Typewise Movement Report </button>
+		<button class="btn btn-info linktext" onclick="window.location.href='typewise_movement_report.php'"> Typewise Movement Report </button>
 		<button class="btn btn-info linktext" onclick="window.location.href='sitewise_movement_report.php'"> Sitewise Movement Report </button>
-		<button class="btn btn-info linktext" onclick="window.location.href='categorywise_movement_report.php'"> Categorywise Movement Report </button>
+		<button class="btn btn-success linktext"> Categorywise Movement Report </button>
 	</div>
     <div class="card-body">
         <form class="form-horizontal" action="" id="warehouse_stock_search_form" method="GET">
@@ -26,14 +26,22 @@
                         <tr>  
 							<td>
                                 <div class="form-group">
-									<label for="sel1">Material Type:</label>
-									<select name="type_id" id="type_id" class="form-control material_select_2">
-										<option value="CIVIL">CIVIL</option>
-										<option value="ELECTRICAL">ELECTRICAL</option>
-										<option value="MACHINICAL">MACHINICAL</option>
-										<option value="SANITARY">SANITARY</option>
-										<option value="HARDWARE">HARDWARE</option>
-										
+									<label for="sel1">Material Category:</label>
+									<select class="form-control material_select_2" id="material_id" name="material_id">
+										<option value="">Select</option>
+										<?php
+										$parentCats = getTableDataByTableName('inv_materialcategorysub', '', 'category_description');
+										if (isset($parentCats) && !empty($parentCats)) {
+											foreach ($parentCats as $pcat) {
+												if($_GET['material_id'] == $pcat['id']){
+													$selected	= 'selected';
+													}else{
+													$selected	= '';
+													}
+												?>
+												<option value="<?php echo $pcat['id'] ?>" <?php echo $selected; ?>><?php echo $pcat['category_description'] ?></option>
+											<?php }
+										} ?>
 									</select>
 								</div>
                             </td>
@@ -66,7 +74,7 @@
 <?php
 if(isset($_GET['submit'])){
 	
-	$type_id		=	$_GET['type_id'];
+	$material_id	=	$_GET['material_id'];
 	$from_date		=	$_GET['from_date'];
 	$to_date		=	$_GET['to_date'];
 	$warehouse_id	=	$_SESSION['logged']['warehouse_id'];
@@ -101,11 +109,15 @@ if(isset($_GET['submit'])){
 					</thead>
 					<tbody>
 					<?php
-						if($_SESSION['logged']['user_type'] !== 'whm'){
-							$sql	=	"SELECT * FROM `inv_materialbalance` GROUP BY `mb_materialid`";
-						}else{
-							$sql	=	"SELECT * FROM `inv_materialbalance` WHERE `warehouse_id` = $warehouse_id GROUP BY `mb_materialid`";
-						}
+						$sqlfind	=	"SELECT * FROM `inv_materialcategorysub` WHERE `id`='$material_id'";
+						$resultfind = mysqli_query($conn, $sqlfind);
+						$rowfind=mysqli_fetch_array($resultfind);
+						$idfind	= $rowfind['category_id'];
+						$mb_materialid 	= substr($idfind, 0, 2);
+						
+						
+						$sql	=	"SELECT * FROM `inv_materialbalance` WHERE `mb_materialid` like '$mb_materialid%' GROUP BY `mb_materialid`";
+						
 						$result = mysqli_query($conn, $sql);
 						while($row=mysqli_fetch_array($result))
 						{

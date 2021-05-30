@@ -14,8 +14,8 @@
 <div class="card mb-3">
     <div class="card-header">
         <button class="btn btn-info linktext" onclick="window.location.href='movement_report.php'">Movement Report Search</button>
-		<button class="btn btn-success linktext"> Typewise Movement Report </button>
-		<button class="btn btn-info linktext" onclick="window.location.href='sitewise_movement_report.php'"> Sitewise Movement Report </button>
+		<button class="btn btn-info linktext" onclick="window.location.href='typewise_movement_report.php'"> Typewise Movement Report </button>
+		<button class="btn btn-success linktext"> Sitewise Movement Report </button>
 		<button class="btn btn-info linktext" onclick="window.location.href='categorywise_movement_report.php'"> Categorywise Movement Report </button>
 	</div>
     <div class="card-body">
@@ -26,14 +26,22 @@
                         <tr>  
 							<td>
                                 <div class="form-group">
-									<label for="sel1">Material Type:</label>
-									<select name="type_id" id="type_id" class="form-control material_select_2">
-										<option value="CIVIL">CIVIL</option>
-										<option value="ELECTRICAL">ELECTRICAL</option>
-										<option value="MACHINICAL">MACHINICAL</option>
-										<option value="SANITARY">SANITARY</option>
-										<option value="HARDWARE">HARDWARE</option>
-										
+									<label for="sel1">Site:</label>
+									<select class="form-control select2" id="warehouse_id" name="warehouse_id">
+										<option value="">Select</option>
+										<?php
+										$warehouse = getTableDataByTableName('inv_warehosueinfo','','name');
+										if (isset($warehouse) && !empty($warehouse)) {
+											foreach ($warehouse as $data) {
+													if($_GET['warehouse_id'] == $data['id']){
+													$selected	= 'selected';
+													}else{
+													$selected	= '';
+													}
+												?>
+												<option value="<?php  echo $data['id'] ?>" <?php echo $selected; ?>><?php echo $data['name'] ?></option>
+											<?php }
+										} ?>
 									</select>
 								</div>
                             </td>
@@ -66,10 +74,9 @@
 <?php
 if(isset($_GET['submit'])){
 	
-	$type_id		=	$_GET['type_id'];
 	$from_date		=	$_GET['from_date'];
 	$to_date		=	$_GET['to_date'];
-	$warehouse_id	=	$_SESSION['logged']['warehouse_id'];
+	$warehouse_id	=	$_GET['warehouse_id'];
 	
 	
 ?>
@@ -101,11 +108,9 @@ if(isset($_GET['submit'])){
 					</thead>
 					<tbody>
 					<?php
-						if($_SESSION['logged']['user_type'] !== 'whm'){
-							$sql	=	"SELECT * FROM `inv_materialbalance` GROUP BY `mb_materialid`";
-						}else{
-							$sql	=	"SELECT * FROM `inv_materialbalance` WHERE `warehouse_id` = $warehouse_id GROUP BY `mb_materialid`";
-						}
+						
+						$sql	=	"SELECT * FROM `inv_materialbalance` WHERE `warehouse_id` = $warehouse_id GROUP BY `mb_materialid`";
+						
 						$result = mysqli_query($conn, $sql);
 						while($row=mysqli_fetch_array($result))
 						{

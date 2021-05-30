@@ -28,7 +28,7 @@
 							<td>
                                 <div class="form-group">
 									<label for="sel1">Material Category:</label>
-									<select class="form-control select2" id="material_id" name="material_id">
+									<select class="form-control material_select_2" id="material_id" name="material_id">
 										<option value="">Select</option>
 										<?php
 										$parentCats = getTableDataByTableName('inv_materialcategorysub', '', 'category_description');
