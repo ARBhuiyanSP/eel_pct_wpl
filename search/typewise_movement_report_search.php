@@ -102,9 +102,9 @@ if(isset($_GET['submit'])){
 					<tbody>
 					<?php
 						if($_SESSION['logged']['user_type'] !== 'whm'){
-							$sql	=	"SELECT * FROM `inv_materialbalance` GROUP BY `mb_materialid`";
+							$sql	=	"SELECT * FROM `qry_typewisestock` WHERE `type`='$type_id' GROUP BY `mb_materialid`";
 						}else{
-							$sql	=	"SELECT * FROM `inv_materialbalance` WHERE `warehouse_id` = $warehouse_id GROUP BY `mb_materialid`";
+							$sql	=	"SELECT * FROM `qry_typewisestock` WHERE `type`='$type_id' AND `warehouse_id` = $warehouse_id GROUP BY `mb_materialid`";
 						}
 						$result = mysqli_query($conn, $sql);
 						while($row=mysqli_fetch_array($result))
@@ -135,9 +135,9 @@ if(isset($_GET['submit'])){
 							<td style="text-align:right;">
 								<?php 
 									if($_SESSION['logged']['user_type'] !== 'whm'){
-										$sqlpreinqty = "SELECT SUM(`mbin_qty`)- SUM(`mbout_qty`) AS totalpre FROM `inv_materialbalance` WHERE `mb_materialid` = '$mb_materialid' AND `mb_date` < '$from_date'";
+										$sqlpreinqty = "SELECT SUM(`mbin_qty`)- SUM(`mbout_qty`) AS totalpre FROM `qry_typewisestock` WHERE `type`='$type_id' AND `mb_materialid` = '$mb_materialid' AND `mb_date` < '$from_date'";
 									}else{
-										$sqlpreinqty = "SELECT SUM(`mbin_qty`)- SUM(`mbout_qty`) AS totalpre FROM `inv_materialbalance` WHERE `warehouse_id` = '$warehouse_id' AND `mb_materialid` = '$mb_materialid' AND `mb_date` < '$from_date'";
+										$sqlpreinqty = "SELECT SUM(`mbin_qty`)- SUM(`mbout_qty`) AS totalpre FROM `qry_typewisestock` WHERE `type`='$type_id' AND `warehouse_id` = '$warehouse_id' AND `mb_materialid` = '$mb_materialid' AND `mb_date` < '$from_date'";
 									}
 									
 									$resultpreinqty = mysqli_query($conn, $sqlpreinqty);
@@ -156,9 +156,9 @@ if(isset($_GET['submit'])){
 							<td style="text-align:right;">
 								<?php 
 									if($_SESSION['logged']['user_type'] !== 'whm'){
-										$sqlinqty = "SELECT SUM(`mbin_qty`) AS totalin FROM `inv_materialbalance` WHERE `mb_materialid` = '$mb_materialid' AND mb_date BETWEEN '$from_date' AND '$to_date'";
+										$sqlinqty = "SELECT SUM(`mbin_qty`) AS totalin FROM `qry_typewisestock` WHERE `type`='$type_id' AND `mb_materialid` = '$mb_materialid' AND mb_date BETWEEN '$from_date' AND '$to_date'";
 									}else{
-										$sqlinqty = "SELECT SUM(`mbin_qty`) AS totalin FROM `inv_materialbalance` WHERE warehouse_id = $warehouse_id AND `mb_materialid` = '$mb_materialid' AND mb_date BETWEEN '$from_date' AND '$to_date'";
+										$sqlinqty = "SELECT SUM(`mbin_qty`) AS totalin FROM `qry_typewisestock` WHERE `type`='$type_id' AND warehouse_id = $warehouse_id AND `mb_materialid` = '$mb_materialid' AND mb_date BETWEEN '$from_date' AND '$to_date'";
 									}
 									
 									$resultinqty = mysqli_query($conn, $sqlinqty);
@@ -170,9 +170,9 @@ if(isset($_GET['submit'])){
 							<td style="text-align:right;">
 							<?php 
 							if($_SESSION['logged']['user_type'] !== 'whm'){
-							$sqloutqty = "SELECT SUM(`mbout_qty`) AS totalout FROM `inv_materialbalance` WHERE `mb_materialid` = '$mb_materialid' AND mb_date BETWEEN '$from_date' AND '$to_date'";
+							$sqloutqty = "SELECT SUM(`mbout_qty`) AS totalout FROM `qry_typewisestock` WHERE `type`='$type_id' AND `mb_materialid` = '$mb_materialid' AND mb_date BETWEEN '$from_date' AND '$to_date'";
 							}else{
-							$sqloutqty = "SELECT SUM(`mbout_qty`) AS totalout FROM `inv_materialbalance` WHERE warehouse_id = $warehouse_id AND `mb_materialid` = '$mb_materialid' AND mb_date BETWEEN '$from_date' AND '$to_date'";
+							$sqloutqty = "SELECT SUM(`mbout_qty`) AS totalout FROM `qry_typewisestock` WHERE `type`='$type_id' AND warehouse_id = $warehouse_id AND `mb_materialid` = '$mb_materialid' AND mb_date BETWEEN '$from_date' AND '$to_date'";
 							}
 							
 							$resultoutqty = mysqli_query($conn, $sqloutqty);
@@ -187,9 +187,9 @@ if(isset($_GET['submit'])){
 							<td style="text-align:right;">
 								<?php
 								if($_SESSION['logged']['user_type'] !== 'whm'){
-									$sqlinval = "SELECT SUM(`mbin_val`) AS totalinval FROM `inv_materialbalance` WHERE `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
+									$sqlinval = "SELECT SUM(`mbin_val`) AS totalinval FROM `qry_typewisestock` WHERE `type`='$type_id' AND `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
 								}else{
-									$sqlinval = "SELECT SUM(`mbin_val`) AS totalinval FROM `inv_materialbalance` WHERE warehouse_id = $warehouse_id AND `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
+									$sqlinval = "SELECT SUM(`mbin_val`) AS totalinval FROM `qry_typewisestock` WHERE `type`='$type_id' AND warehouse_id = $warehouse_id AND `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
 								}
 								
 								$resultinval= mysqli_query($conn, $sqlinval);
@@ -204,7 +204,7 @@ if(isset($_GET['submit'])){
 							}
 							$rowcount=mysqli_num_rows($result);
 							if($rowcount < 1) { ?>
-								<tr><td colspan="6"><center>No Data Found</center></td></tr>
+								<tr><td colspan="8"><center>No Data Found</center></td></tr>
 						<?php } ?>
 					</tbody>
 				</table>

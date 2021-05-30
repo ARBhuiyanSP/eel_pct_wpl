@@ -90,9 +90,8 @@ if(isset($_GET['submit'])){
 						<tr>
 							<th colspan="8">
 								<center>
-										<img src="images/Saif_Engineering_Logo_165X72.png" height="100px;"/><br>
-										<span>Material Movement Report</span><br>
-										From  <span class="dtext"><?php echo date("jS F Y", strtotime($from_date));?> </span>To  <span class="dtext"><?php echo date("jS F Y", strtotime($to_date));?> </span>
+									<img src="images/Saif_Engineering_Logo_165X72.png" height="100px;"/><br>
+									<span>Material Movement Report</span><br> From  <span class="dtext"><?php echo date("jS F Y", strtotime($from_date));?> </span>To  <span class="dtext"><?php echo date("jS F Y", strtotime($to_date));?> </span>
 								</center>
 							</th>
 						</tr>
