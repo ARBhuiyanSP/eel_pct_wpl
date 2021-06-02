@@ -11,9 +11,9 @@
 </style>
 <div class="card mb-3">
     <div class="card-header">
-		<button class="btn btn-success linktext">Issue Report Search</button>
+		<button class="btn btn-info linktext" onclick="window.location.href='issue_report.php'">Issue Report Search</button>
 		<button class="btn btn-info linktext" onclick="window.location.href='materialwise_issue_report.php'"> Materialwise Issue Report </button>
-		<button class="btn btn-info linktext" onclick="window.location.href='typewise_issue_report.php'"> Typewise Movement Report </button>
+		<button class="btn btn-success linktext"> Typewise Movement Report </button>
 	</div>
     <div class="card-body">
         <form class="form-horizontal" action="" id="warehouse_stock_search_form" method="GET">
@@ -21,6 +21,19 @@
                 <table class="table table-borderless search-table">
                     <tbody>
                         <tr>  
+							<td>
+                                <div class="form-group">
+									<label for="sel1">Material Type:</label>
+									<select name="type_id" id="type_id" class="form-control material_select_2">
+										<option value="CIVIL">CIVIL</option>
+										<option value="ELECTRICAL">ELECTRICAL</option>
+										<option value="MACHINICAL">MACHINICAL</option>
+										<option value="SANITARY">SANITARY</option>
+										<option value="HARDWARE">HARDWARE</option>
+										
+									</select>
+								</div>
+                            </td>
 							<td>
                                 <div class="form-group">
                                     <label for="todate">From Date</label>
@@ -50,6 +63,7 @@
 <?php
 if(isset($_GET['submit'])){
 	
+	$type_id		=	$_GET['type_id'];
 	$from_date		=	$_GET['from_date'];
 	$to_date		=	$_GET['to_date'];
 	$warehouse_id	=	$_SESSION['logged']['warehouse_id'];
@@ -67,6 +81,7 @@ if(isset($_GET['submit'])){
 						<p>
 							<img src="images/Saif_Engineering_Logo_165X72.png" height="100px;"/><br>
 							<span>Material Issue Report</span><br>
+							<span><?php echo $type_id; ?></span><br>
 							From <span class="dtext"><?php echo date("jS F Y", strtotime($from_date));?></span> To  <span class="dtext"><?php echo date("jS F Y", strtotime($to_date));?> </span><br>
 						</p>
 					</center>
@@ -80,15 +95,14 @@ if(isset($_GET['submit'])){
 							<th>Unit</th>
 							<th>Issue QTY</th>
 							<th>Site</th>
-
 						</tr>
 					</thead>
 					<tbody>
 						<?php
 							if($_SESSION['logged']['user_type'] !== 'whm'){
-								$sql	=	"SELECT * FROM `inv_issue` where `issue_date` BETWEEN '$from_date' AND '$to_date';";
+								$sql	=	"SELECT * FROM `qry_inv_issue` where `type`='$type_id' AND `issue_date` BETWEEN '$from_date' AND '$to_date';";
 							}else{
-								$sql	=	"SELECT * FROM `inv_issue` where `warehouse_id` = '$warehouse_id' AND `issue_date` BETWEEN '$from_date' AND '$to_date';";
+								$sql	=	"SELECT * FROM `qry_inv_issue` where `type`='$type_id' AND `warehouse_id` = '$warehouse_id' AND `issue_date` BETWEEN '$from_date' AND '$to_date';";
 							}
 							
 							$result = mysqli_query($conn, $sql);
@@ -111,7 +125,7 @@ if(isset($_GET['submit'])){
 							$totalQty = 0;
 							
 							$issue_id = $row['issue_id'];
-							$sqlall	=	"SELECT * FROM `inv_issuedetail` WHERE `issue_id` = '$issue_id';";
+							$sqlall	=	"SELECT * FROM `qry_inv_issue` where `type`='$type_id' AND `issue_id` = '$issue_id';";
 							$resultall = mysqli_query($conn, $sqlall);
 							while($rowall=mysqli_fetch_array($resultall))
 							{

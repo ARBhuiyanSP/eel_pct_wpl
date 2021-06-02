@@ -11,8 +11,8 @@
 </style>
 <div class="card mb-3">
     <div class="card-header">
-		<button class="btn btn-success linktext">Issue Report Search</button>
-		<button class="btn btn-info linktext" onclick="window.location.href='materialwise_issue_report.php'"> Materialwise Issue Report </button>
+		<button class="btn btn-info linktext" onclick="window.location.href='issue_report.php'">Issue Report Search</button>
+		<button class="btn btn-success linktext"> Materialwise Issue Report </button>
 		<button class="btn btn-info linktext" onclick="window.location.href='typewise_issue_report.php'"> Typewise Movement Report </button>
 	</div>
     <div class="card-body">
@@ -21,6 +21,35 @@
                 <table class="table table-borderless search-table">
                     <tbody>
                         <tr>  
+							<td>
+								<div class="form-group">
+									<label for="id">Material</label>
+									<select class="form-control material_select_2" id="material_name" name="material_name" required  onchange="getItemCodeByParam(this.value, 'inv_material', 'material_id_code', 'material_id');">
+										<option value="">Select</option>
+										<?php
+										$projectsData = get_product_with_category();
+										if (isset($projectsData) && !empty($projectsData)) {
+											foreach ($projectsData as $data) {
+												if($_GET['material_name'] == $data['id']){
+													$selected	= 'selected';
+													}else{
+													$selected	= '';
+													}
+												?>
+												<option value="<?php echo $data['id']; ?>" <?php echo $selected; ?>><?php echo $data['material_name']; ?></option>
+												<?php
+											}
+										}
+										?>
+									</select>
+								</div>
+							</td>
+							<td>
+								<div class="form-group">
+									<label for="id">Material ID</label>
+									<input type="text" name="material_id" id="material_id" class="form-control" required readonly>
+								</div>
+							</td>
 							<td>
                                 <div class="form-group">
                                     <label for="todate">From Date</label>
@@ -49,7 +78,8 @@
 </div>
 <?php
 if(isset($_GET['submit'])){
-	
+	$material_name	=	$_GET['material_name'];
+	$material_id	=	$_GET['material_id'];
 	$from_date		=	$_GET['from_date'];
 	$to_date		=	$_GET['to_date'];
 	$warehouse_id	=	$_SESSION['logged']['warehouse_id'];
@@ -67,6 +97,7 @@ if(isset($_GET['submit'])){
 						<p>
 							<img src="images/Saif_Engineering_Logo_165X72.png" height="100px;"/><br>
 							<span>Material Issue Report</span><br>
+							<span><?php echo getDataRowByTableAndId('inv_material', $material_name)->material_description; ?></span><br>
 							From <span class="dtext"><?php echo date("jS F Y", strtotime($from_date));?></span> To  <span class="dtext"><?php echo date("jS F Y", strtotime($to_date));?> </span><br>
 						</p>
 					</center>
@@ -80,15 +111,14 @@ if(isset($_GET['submit'])){
 							<th>Unit</th>
 							<th>Issue QTY</th>
 							<th>Site</th>
-
 						</tr>
 					</thead>
 					<tbody>
 						<?php
 							if($_SESSION['logged']['user_type'] !== 'whm'){
-								$sql	=	"SELECT * FROM `inv_issue` where `issue_date` BETWEEN '$from_date' AND '$to_date';";
+								$sql	=	"SELECT * FROM `qry_inv_issue` where `material_id`='$material_id' AND `issue_date` BETWEEN '$from_date' AND '$to_date';";
 							}else{
-								$sql	=	"SELECT * FROM `inv_issue` where `warehouse_id` = '$warehouse_id' AND `issue_date` BETWEEN '$from_date' AND '$to_date';";
+								$sql	=	"SELECT * FROM `qry_inv_issue` where `material_id`='$material_id' AND `warehouse_id` = '$warehouse_id' AND `issue_date` BETWEEN '$from_date' AND '$to_date';";
 							}
 							
 							$result = mysqli_query($conn, $sql);
@@ -111,7 +141,7 @@ if(isset($_GET['submit'])){
 							$totalQty = 0;
 							
 							$issue_id = $row['issue_id'];
-							$sqlall	=	"SELECT * FROM `inv_issuedetail` WHERE `issue_id` = '$issue_id';";
+							$sqlall	=	"SELECT * FROM `qry_inv_issue` where `material_id`='$material_id' AND `issue_id` = '$issue_id';";
 							$resultall = mysqli_query($conn, $sqlall);
 							while($rowall=mysqli_fetch_array($resultall))
 							{
