@@ -240,9 +240,14 @@
             <span>Issue details</span></a>
     </li>
 	<li class="nav-item">
-        <a class="nav-link" href="warhousetransfer_report.php">
+        <a class="nav-link" href="s2stransfer_report.php">
             <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
-            <span>Transfer details</span></a>
+            <span>S2S Transfer details</span></a>
+    </li>
+	<li class="nav-item">
+        <a class="nav-link" href="p2ptransfer_report.php">
+            <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
+            <span>P2P Transfer details</span></a>
     </li>
 	<li class="nav-item">
         <a class="nav-link" href="return_report.php">
